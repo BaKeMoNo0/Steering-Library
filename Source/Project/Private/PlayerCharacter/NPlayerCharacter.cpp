@@ -9,8 +9,16 @@
 ANPlayerCharacter::ANPlayerCharacter() {
  	PrimaryActorTick.bCanEverTick = true;
 	MaxSpeed = 600.0f;
-	CurrentBehavior = None;
+	MaxForce = 250.0f;
+	CurrentBehavior = Walk;
 }
+
+
+void ANPlayerCharacter::BeginPlay() {
+	Super::BeginPlay();
+	PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+}
+
 
 void ANPlayerCharacter::SetBehavior(UEBehaviorType NewBehavior){
 	CurrentBehavior = NewBehavior;
@@ -18,20 +26,18 @@ void ANPlayerCharacter::SetBehavior(UEBehaviorType NewBehavior){
 
 void ANPlayerCharacter::ExecuteCurrentBehavior(FVector TargetLocation) {
 	switch (CurrentBehavior) {
+	case Walk:
+		AddMovementInput(GetActorForwardVector(), 1.0f);
+		break;
 	case Seek:
 		SeekBehavior(TargetLocation);
 		break;
 	case Flee:
-			break;
+		FleeBehavior(TargetLocation);
+		break;
 	default:
 		break;
 	}
-}
-
-
-void ANPlayerCharacter::BeginPlay() {
-	Super::BeginPlay();
-	PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
 }
 
 
@@ -45,15 +51,40 @@ void ANPlayerCharacter::Tick(float DeltaTime) {
 
 void ANPlayerCharacter::SeekBehavior(const FVector& Target) {
 	FVector CurrentPosition = GetActorLocation();
+	FVector CurrentVelocity = GetCharacterMovement()->Velocity;
 
 	FVector DesiredVelocity = (Target - CurrentPosition).GetSafeNormal() * MaxSpeed;
-	FVector CurrentVelocity = GetCharacterMovement()->Velocity;
 	FVector Steering = DesiredVelocity - CurrentVelocity;
-	AddMovementInput(Steering);
-	//GetCharacterMovement()->Velocity = NewVelocity;
+	Steering = FMath::VInterpTo(CurrentVelocity, Steering, GetWorld()->GetDeltaSeconds(), 9.0f);
+	Steering = Steering.GetClampedToMaxSize(MaxForce);
 
 	FVector NewVelocity = CurrentVelocity + Steering;
 	NewVelocity = NewVelocity.GetClampedToMaxSize(MaxSpeed);
+
+	FVector Direction = NewVelocity.GetSafeNormal();
+	AddMovementInput(Direction, 1.0f);
+
 	FRotator NewRotation = UKismetMathLibrary::MakeRotFromX(NewVelocity);
-	SetActorRotation(NewRotation);
+	FRotator SmoothedRotation = FMath::RInterpTo(GetActorRotation(), NewRotation, GetWorld()->GetDeltaSeconds(), 10.0f);
+	SetActorRotation(SmoothedRotation);
+}
+
+void ANPlayerCharacter::FleeBehavior(const FVector& Target) {
+	FVector CurrentPosition = GetActorLocation();
+	FVector CurrentVelocity = GetCharacterMovement()->Velocity;
+
+	FVector DesiredVelocity = (CurrentPosition - Target).GetSafeNormal() * MaxSpeed;
+	FVector Steering = DesiredVelocity - CurrentVelocity;
+	Steering = FMath::VInterpTo(CurrentVelocity, Steering, GetWorld()->GetDeltaSeconds(), 9.0f);
+	Steering = Steering.GetClampedToMaxSize(MaxForce);
+
+	FVector NewVelocity = CurrentVelocity + Steering;
+	NewVelocity = NewVelocity.GetClampedToMaxSize(MaxSpeed);
+
+	FVector Direction = NewVelocity.GetSafeNormal();
+	AddMovementInput(Direction, 1.0f);
+
+	FRotator NewRotation = UKismetMathLibrary::MakeRotFromX(NewVelocity);
+	FRotator SmoothedRotation = FMath::RInterpTo(GetActorRotation(), NewRotation, GetWorld()->GetDeltaSeconds(), 10.0f);
+	SetActorRotation(SmoothedRotation);
 }

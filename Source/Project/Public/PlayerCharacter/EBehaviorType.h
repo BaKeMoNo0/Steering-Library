@@ -10,6 +10,7 @@
 UENUM(BlueprintType)
 enum UEBehaviorType : uint8 {
 	None UMETA(DisplayName = "None"),
+	Walk UMETA(DisplayName = "Walk"),
 	Seek UMETA(DisplayName = "Seek"),
 	Flee UMETA(DisplayName = "Flee"),
 };

@@ -22,6 +22,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	
 	float MaxSpeed;
+	float MaxForce;
 	APawn* PlayerPawn;
 	
 	
@@ -29,4 +30,5 @@ public:
 	void ExecuteCurrentBehavior(FVector TargetLocation);
 	void SetBehavior(UEBehaviorType NewBehavior);
 	void SeekBehavior(const FVector& Target);
+	void FleeBehavior(const FVector& Target);
 };
