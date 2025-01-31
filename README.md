@@ -7,9 +7,7 @@ Future updates will include refinements, optimizations, and additional features.
 
 # Overview
 This project is a small steering library implemented in Unreal Engine. It provides various AI movement behaviors inspired by Craig Reynolds' steering behaviors.
-
 The objective is to visualize and simulate autonomous agents moving in a dynamic environment.
-
 ⚠️ This project is still in development, and not all behaviors are fully implemented yet.
 
 # Features
@@ -33,7 +31,7 @@ The library aims to include the following behaviors (Work in Progress 🚧):
   - Open the .uproject file and allow Unreal Engine to rebuild necessary files if prompted.
   - Compile and launch the project.
 
-Usage
+# Usage
   Launch the project in Unreal Engine.
   Press Play to observe the behaviors in action.
   Control the character using:  
