@@ -13,4 +13,5 @@ enum UEBehaviorType : uint8 {
 	Walk UMETA(DisplayName = "Walk"),
 	Seek UMETA(DisplayName = "Seek"),
 	Flee UMETA(DisplayName = "Flee"),
+	Pursuit UMETA(DisplayName = "Pursuit"),
 };

@@ -34,11 +34,14 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = Input)
 	UInputAction* FleeAction;
-	
+
+	UPROPERTY(EditAnywhere, Category = Input)
+	UInputAction* PursuitAction;
 	
 	ANPlayerCharacter* NPCRef;
 	AProjectGameMode* GameMode;
 	
 	void SetSeekBehaviorOnNPC();
 	void SetFleeBehaviorOnNPC();
+	void SetPursuitBehaviorOnNPC();
 };

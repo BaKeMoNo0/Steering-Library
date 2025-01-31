@@ -29,6 +29,10 @@ public:
 	UEBehaviorType CurrentBehavior;
 	void ExecuteCurrentBehavior(FVector TargetLocation);
 	void SetBehavior(UEBehaviorType NewBehavior);
+	void MoveWithSteering(const FVector& Steering, float InterpeSpeedRotation);
+	FVector CalculateSteeringForce(const FVector& DesiredVelocity, float InterSpeedSteering) const;
+	
 	void SeekBehavior(const FVector& Target);
 	void FleeBehavior(const FVector& Target);
+	void PursuitBehavior(const FVector& Target);
 };
