@@ -32,7 +32,8 @@ public:
 	void MoveWithSteering(const FVector& Steering, float InterpeSpeedRotation);
 	FVector CalculateSteeringForce(const FVector& DesiredVelocity, float InterSpeedSteering) const;
 	
-	void SeekBehavior(const FVector& Target);
-	void FleeBehavior(const FVector& Target);
+	void SeekBehavior(const FVector& Target, float InterpeSpeedRotation, float InterpeSpeedSteering);
+	void FleeBehavior(const FVector& Target, float InterpeSpeedRotation, float InterpeSpeedSteering);
 	void PursuitBehavior(const FVector& Target);
+	void EvadeBehavior(const FVector& Target);
 };

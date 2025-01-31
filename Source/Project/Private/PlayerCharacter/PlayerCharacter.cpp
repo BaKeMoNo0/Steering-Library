@@ -39,6 +39,9 @@ void APlayerCharacter::BeginPlay() {
 		if (PursuitAction){
 			EnhancedInputComponent->BindAction(PursuitAction, ETriggerEvent::Triggered, this, &APlayerCharacter::SetPursuitBehaviorOnNPC);
 		}
+		if (EvadeAction){
+			EnhancedInputComponent->BindAction(EvadeAction, ETriggerEvent::Triggered, this, &APlayerCharacter::SetEvadeBehaviorOnNPC);
+		}
 	}
 }
 
@@ -65,6 +68,13 @@ void APlayerCharacter::SetPursuitBehaviorOnNPC() {
 	if (NPCRef) {
 		NPCRef->SetBehavior(UEBehaviorType::Pursuit);
 		GameMode->MainMenuWidget->UpdateText("Pursuit");
+	}
+}
+
+void APlayerCharacter::SetEvadeBehaviorOnNPC() {
+	if (NPCRef) {
+		NPCRef->SetBehavior(UEBehaviorType::Evade);
+		GameMode->MainMenuWidget->UpdateText("Evade");
 	}
 }
 

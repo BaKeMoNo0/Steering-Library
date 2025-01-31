@@ -37,6 +37,9 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = Input)
 	UInputAction* PursuitAction;
+
+	UPROPERTY(EditAnywhere, Category = Input)
+	UInputAction* EvadeAction;
 	
 	ANPlayerCharacter* NPCRef;
 	AProjectGameMode* GameMode;
@@ -44,4 +47,5 @@ public:
 	void SetSeekBehaviorOnNPC();
 	void SetFleeBehaviorOnNPC();
 	void SetPursuitBehaviorOnNPC();
+	void SetEvadeBehaviorOnNPC();
 };

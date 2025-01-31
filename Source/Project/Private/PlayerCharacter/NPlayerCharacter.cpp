@@ -24,19 +24,23 @@ void ANPlayerCharacter::SetBehavior(UEBehaviorType NewBehavior){
 	CurrentBehavior = NewBehavior;
 }
 
+
 void ANPlayerCharacter::ExecuteCurrentBehavior(FVector TargetLocation) {
 	switch (CurrentBehavior) {
 	case Walk:
 		AddMovementInput(GetActorForwardVector(), 1.0f);
 		break;
 	case Seek:
-		SeekBehavior(TargetLocation);
+		SeekBehavior(TargetLocation, 9.0f, 10.0f);
 		break;
 	case Flee:
-		FleeBehavior(TargetLocation);
+		FleeBehavior(TargetLocation, 11.0f, 12.0f);
 		break;
 	case Pursuit:
 		PursuitBehavior(TargetLocation);
+		break;
+	case Evade:
+		EvadeBehavior(TargetLocation);
 		break;
 	default:
 		break;
@@ -44,13 +48,6 @@ void ANPlayerCharacter::ExecuteCurrentBehavior(FVector TargetLocation) {
 }
 
 
-void ANPlayerCharacter::Tick(float DeltaTime) {
-	Super::Tick(DeltaTime);
-	if (PlayerPawn) {
-		FVector TargetLocation = PlayerPawn->GetActorLocation();
-		ExecuteCurrentBehavior(TargetLocation);
-	}
-}
 
 
 void ANPlayerCharacter::MoveWithSteering(const FVector& Steering, const float InterpeSpeedRotation)
@@ -76,19 +73,19 @@ FVector ANPlayerCharacter::CalculateSteeringForce(const FVector& DesiredVelocity
 }
 
 
-void ANPlayerCharacter::SeekBehavior(const FVector& Target) {
+void ANPlayerCharacter::SeekBehavior(const FVector& Target, float InterpeSpeedRotation, float InterpeSpeedSteering) {
 	FVector CurrentPosition = GetActorLocation();
 	FVector DesiredVelocity = (Target - CurrentPosition).GetSafeNormal() * MaxSpeed;
-	FVector Steering = CalculateSteeringForce(DesiredVelocity, 10.0f);
-	MoveWithSteering(Steering, 9.0f);
+	FVector Steering = CalculateSteeringForce(DesiredVelocity, InterpeSpeedSteering);
+	MoveWithSteering(Steering, InterpeSpeedRotation);
 }
 
 
-void ANPlayerCharacter::FleeBehavior(const FVector& Target) {
+void ANPlayerCharacter::FleeBehavior(const FVector& Target, float InterpeSpeedRotation, float InterpeSpeedSteering) {
 	FVector CurrentPosition = GetActorLocation();
 	FVector DesiredVelocity = (CurrentPosition - Target).GetSafeNormal() * MaxSpeed;
-	FVector Steering = CalculateSteeringForce(DesiredVelocity, 12.0f);
-	MoveWithSteering(Steering,11.0f);
+	FVector Steering = CalculateSteeringForce(DesiredVelocity, InterpeSpeedSteering);
+	MoveWithSteering(Steering,InterpeSpeedRotation);
 }
 
 
@@ -101,10 +98,41 @@ void ANPlayerCharacter::PursuitBehavior(const FVector& Target) {
 	float Alignment = FVector::DotProduct(ToTarget, TargetVelocity.GetSafeNormal());
 
 	float c = FMath::Lerp(0.3f, 1.0f, 1.0f - (Alignment * 0.5f));
-	float PredictionTime = (DistanceToTarget / MaxSpeed) * c;
+
+	float RelativeSpeed = (TargetVelocity - GetCharacterMovement()->Velocity).Size();
+    float PredictionTime = (RelativeSpeed > 0) ? (DistanceToTarget / RelativeSpeed) * c : 0.5f;
+    PredictionTime = FMath::Clamp(PredictionTime, 0.1f, 2.5f);
+    FVector PredictedTarget = Target + TargetVelocity * PredictionTime;
+
+	SeekBehavior(PredictedTarget, 15.0f, 15.0f);
+}
+
+
+void ANPlayerCharacter::EvadeBehavior(const FVector& Target) {
+	FVector CurrentPosition = GetActorLocation();
+	FVector TargetVelocity = PlayerPawn->GetVelocity();
+	float DistanceToTarget = FVector::Dist(CurrentPosition, Target);
+
+	FVector ToTarget = (Target - CurrentPosition).GetSafeNormal();
+	float Alignment = FVector::DotProduct(ToTarget, TargetVelocity.GetSafeNormal());
+
+	float c = FMath::Lerp(0.3f, 1.0f, 1.0f - (Alignment * 0.5f));
+	
+	float RelativeSpeed = (TargetVelocity - GetCharacterMovement()->Velocity).Size();
+	float PredictionTime = (RelativeSpeed > 0) ? (DistanceToTarget / RelativeSpeed) * c : 0.5f;
+	PredictionTime = FMath::Clamp(PredictionTime, 0.1f, 2.5f);
 	FVector PredictedTarget = Target + TargetVelocity * PredictionTime;
 
-	FVector DesiredVelocity = (PredictedTarget - CurrentPosition).GetSafeNormal() * MaxSpeed;
-	FVector Steering = CalculateSteeringForce(DesiredVelocity, 15);
-	MoveWithSteering(Steering, 15);
+	FleeBehavior(PredictedTarget, 15.0f, 15.0f);
+}
+
+
+
+
+void ANPlayerCharacter::Tick(float DeltaTime) {
+	Super::Tick(DeltaTime);
+	if (PlayerPawn) {
+		FVector TargetLocation = PlayerPawn->GetActorLocation();
+		ExecuteCurrentBehavior(TargetLocation);
+	}
 }
