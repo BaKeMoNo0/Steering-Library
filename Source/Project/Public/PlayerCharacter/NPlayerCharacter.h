@@ -23,17 +23,19 @@ public:
 	
 	float MaxSpeed;
 	float MaxForce;
+	float Mass;
 	APawn* PlayerPawn;
 	
 	
 	UEBehaviorType CurrentBehavior;
 	void ExecuteCurrentBehavior(FVector TargetLocation);
 	void SetBehavior(UEBehaviorType NewBehavior);
-	void MoveWithSteering(const FVector& Steering, float InterpeSpeedRotation);
-	FVector CalculateSteeringForce(const FVector& DesiredVelocity, float InterSpeedSteering) const;
+	FVector CalculateSteeringForce(const FVector& DesiredVelocity) const;
+	void MoveWithSteering(const FVector& Steering);
 	
-	void SeekBehavior(const FVector& Target, float InterpeSpeedRotation, float InterpeSpeedSteering);
-	void FleeBehavior(const FVector& Target, float InterpeSpeedRotation, float InterpeSpeedSteering);
+	void SeekBehavior(const FVector& Target);
+	void FleeBehavior(const FVector& Target);
 	void PursuitBehavior(const FVector& Target);
 	void EvadeBehavior(const FVector& Target);
+	void ArriveBehavior(const FVector& Target);
 };

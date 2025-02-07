@@ -30,17 +30,20 @@ void APlayerCharacter::BeginPlay() {
 	}
 
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent)) {
-		if (SeekAction){
+		if (SeekAction) {
 			EnhancedInputComponent->BindAction(SeekAction, ETriggerEvent::Triggered, this, &APlayerCharacter::SetSeekBehaviorOnNPC);
 		}
-		if (FleeAction){
+		if (FleeAction) {
 			EnhancedInputComponent->BindAction(FleeAction, ETriggerEvent::Triggered, this, &APlayerCharacter::SetFleeBehaviorOnNPC);
 		}
-		if (PursuitAction){
+		if (PursuitAction) {
 			EnhancedInputComponent->BindAction(PursuitAction, ETriggerEvent::Triggered, this, &APlayerCharacter::SetPursuitBehaviorOnNPC);
 		}
-		if (EvadeAction){
+		if (EvadeAction) {
 			EnhancedInputComponent->BindAction(EvadeAction, ETriggerEvent::Triggered, this, &APlayerCharacter::SetEvadeBehaviorOnNPC);
+		}
+		if (ArrivalAction) {
+			EnhancedInputComponent->BindAction(ArrivalAction, ETriggerEvent::Triggered, this, &APlayerCharacter::SetArrivalBehaviorOnNPC);
 		}
 	}
 }
@@ -75,6 +78,13 @@ void APlayerCharacter::SetEvadeBehaviorOnNPC() {
 	if (NPCRef) {
 		NPCRef->SetBehavior(UEBehaviorType::Evade);
 		GameMode->MainMenuWidget->UpdateText("Evade");
+	}
+}
+
+void APlayerCharacter::SetArrivalBehaviorOnNPC() {
+	if (NPCRef) {
+		NPCRef->SetBehavior(UEBehaviorType::Arrival);
+		GameMode->MainMenuWidget->UpdateText("Arrival");
 	}
 }
 
