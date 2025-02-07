@@ -16,9 +16,9 @@ The library aims to include the following behaviors (Work in Progress 🚧):
 ## Basic Behaviors:
   - ✅ Seek: The agent moves toward a fixed target.
   - ✅ Flee: The agent moves away from a fixed target.
-  - ✅ Pursuit: The agent predicts and intercepts a moving target.  (Might be changed)
-  - ❌ Evade: The agent predicts and avoids a pursuer. (Not yet implemented)
-  - ❌ Arrival: The agent moves toward a fixed target and decelerates to stop smoothly. (Not yet implemented)
+  - ✅ Pursuit: The agent predicts and intercepts a moving target.
+  - ✅ Evade: The agent predicts and avoids a pursuer.
+  - ✅ Arrival: The agent moves toward a fixed target and decelerates to stop smoothly.
 
 ## Combined Behaviors:
   - ❌ Circuit: The agent follows a looping path continuously. (Not yet implemented)
@@ -42,3 +42,5 @@ The library aims to include the following behaviors (Work in Progress 🚧):
    - **'&' or '1'** for **Seek** behavior.  
    - **'é' or '2'** for **Flee** behavior.  
    - **'\"' or '3'** for **Pursuit** behavior.
+   - **'\'' or '4'** for **Evade** behavior.
+   - **'(' or '5'** for **Arrival** behavior.
