@@ -21,8 +21,8 @@ The library aims to include the following behaviors (Work in Progress 🚧):
   - ✅ Arrival: The agent moves toward a fixed target and decelerates to stop smoothly.
 
 ## Combined Behaviors:
-  - ❌ Circuit: The agent follows a looping path continuously. (Not yet implemented)
-  - ❌ One way: The agent follows a path to a specific endpoint and stops. (Not yet implemented)
+  - ✅ Circuit: The agent follows a looping path continuously.
+  - ✅ One way: The agent follows a path to a specific endpoint and stops.
   - ❌ Two ways: The agent moves to an endpoint, then reverses direction back to the start, repeating the process indefinitely. (Not yet implemented)
 
 # Steps
@@ -44,3 +44,5 @@ The library aims to include the following behaviors (Work in Progress 🚧):
    - **'\"' or '3'** for **Pursuit** behavior.
    - **'\'' or '4'** for **Evade** behavior.
    - **'(' or '5'** for **Arrival** behavior.
+   - **'-' or '6'** for **Circuit** behavior.
+   - **'è' or '7'** for **OneWay** behavior.
