@@ -44,6 +44,12 @@ public:
 	UPROPERTY(EditAnywhere, Category = Input)
 	UInputAction* ArrivalAction;
 	
+	UPROPERTY(EditAnywhere, Category = Input)
+	UInputAction* CircuitAction;
+
+	UPROPERTY(EditAnywhere, Category = Input)
+	UInputAction* OneWayAction;
+	
 	ANPlayerCharacter* NPCRef;
 	AProjectGameMode* GameMode;
 	
@@ -52,4 +58,6 @@ public:
 	void SetPursuitBehaviorOnNPC();
 	void SetEvadeBehaviorOnNPC();
 	void SetArrivalBehaviorOnNPC();
+	void SetCircuitBehaviorOnNPC();
+	void SetOneWayBehaviorOnNPC();
 };

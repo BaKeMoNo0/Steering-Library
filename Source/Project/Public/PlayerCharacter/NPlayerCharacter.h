@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "EBehaviorType.h"
+#include "Path.h"
 #include "GameFramework/Character.h"
 #include "NPlayerCharacter.generated.h"
 
@@ -25,7 +26,8 @@ public:
 	float MaxForce;
 	float Mass;
 	APawn* PlayerPawn;
-	
+	UPROPERTY(EditAnywhere, Category = "Path Following")
+	APath* PathToFollow;
 	
 	UEBehaviorType CurrentBehavior;
 	void ExecuteCurrentBehavior(FVector TargetLocation);
@@ -37,5 +39,13 @@ public:
 	void FleeBehavior(const FVector& Target);
 	void PursuitBehavior(const FVector& Target);
 	void EvadeBehavior(const FVector& Target);
-	void ArriveBehavior(const FVector& Target);
+	void ArrivalBehavior(const FVector& Target);
+	void CircuitBehavior();
+	void OneWayBehavior();
+	FVector GetNextTargetOnSpline(int& CurrentIndex);
+	int NearestSplinePoint();
+
+	private:
+	float AcceptanceRadius = 200.0f;
+	int CurrentSplineIndex = -1;
 };

@@ -2,9 +2,10 @@
 
 
 #include "PlayerCharacter/NPlayerCharacter.h"
+
+#include "EngineUtils.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
-#include "Kismet/KismetMathLibrary.h"
 #include "PlayerCharacter/PlayerCharacter.h"
 
 
@@ -20,10 +21,18 @@ ANPlayerCharacter::ANPlayerCharacter() {
 void ANPlayerCharacter::BeginPlay() {
 	Super::BeginPlay();
 	PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+
+	if (!PathToFollow) {
+		for (TActorIterator<APath> It(GetWorld()); It; ++It) {
+			PathToFollow = *It;
+			UE_LOG(LogTemp, Warning, TEXT("Path trouvé automatiquement : %s"), *PathToFollow->GetName());
+			break;
+		}
+	}
 }
 
 
-void ANPlayerCharacter::SetBehavior(UEBehaviorType NewBehavior){
+void ANPlayerCharacter::SetBehavior(const UEBehaviorType NewBehavior){
 	CurrentBehavior = NewBehavior;
 }
 
@@ -46,7 +55,13 @@ void ANPlayerCharacter::ExecuteCurrentBehavior(FVector TargetLocation) {
 		EvadeBehavior(TargetLocation);
 		break;
 	case Arrival:
-		ArriveBehavior(TargetLocation);
+		ArrivalBehavior(TargetLocation);
+		break;
+	case Circuit:
+		CircuitBehavior();
+		break;
+	case OneWay:
+		OneWayBehavior();
 		break;
 	default:
 		break;
@@ -135,7 +150,7 @@ void ANPlayerCharacter::EvadeBehavior(const FVector& Target) {
 }
 
 
-void ANPlayerCharacter::ArriveBehavior(const FVector& Target) {
+void ANPlayerCharacter::ArrivalBehavior(const FVector& Target) {
 	FVector CurrentPosition = GetActorLocation();
 	float DistanceToTarget = FVector::Dist(CurrentPosition, Target);
 	float SlowingDistance = 600.0f;
@@ -161,12 +176,73 @@ void ANPlayerCharacter::ArriveBehavior(const FVector& Target) {
 		AddMovementInput(NewForward, SpeedFactor);
 
 		if (!NewVelocity.IsNearlyZero()) {
-			FVector ApproximateUp = FVector::UpVector;
-			FVector NewRight = ApproximateUp.Cross(NewForward).GetSafeNormal(); // Calcul Axe Y
-			FVector NewUp = NewForward.Cross(NewRight).GetSafeNormal(); // Calcul Axe Z
-			FMatrix NewRotationMatrix(NewForward, NewRight, NewUp, FVector::ZeroVector);
-			FRotator NewRotation = NewRotationMatrix.Rotator();
+			FRotator NewRotation = NewVelocity.Rotation();
+			NewRotation.Pitch = 0;
+			NewRotation.Roll = 0;
 			SetActorRotation(NewRotation);
+		}
+	}
+}
+
+
+void ANPlayerCharacter::CircuitBehavior() {
+	if (!PathToFollow) return;
+
+	if (CurrentSplineIndex < 0) {
+		CurrentSplineIndex = NearestSplinePoint();
+	}
+	
+	FVector NextTarget = GetNextTargetOnSpline(CurrentSplineIndex);
+	float DistanceToTarget = FVector::Dist(GetActorLocation(), NextTarget);
+
+	if (DistanceToTarget < AcceptanceRadius) {
+		CurrentSplineIndex = (CurrentSplineIndex + 1) % PathToFollow->SplineComponent->GetNumberOfSplinePoints();
+	}
+
+	SeekBehavior(NextTarget);
+}
+
+FVector ANPlayerCharacter::GetNextTargetOnSpline(int& CurrentIndex) {
+	if (!PathToFollow) return FVector::ZeroVector;
+	FVector TargetPosition = PathToFollow->SplineComponent->GetLocationAtSplinePoint(CurrentIndex, ESplineCoordinateSpace::World);
+	return TargetPosition;
+}
+
+int ANPlayerCharacter::NearestSplinePoint() {
+	int Ind = 0;
+	int NumPoints = PathToFollow->SplineComponent->GetNumberOfSplinePoints();
+	if (NumPoints == 0) return -2;
+	FVector Point = PathToFollow->SplineComponent->GetLocationAtSplinePoint(0, ESplineCoordinateSpace::World);
+	float DistanceToTarget = FVector::Dist(GetActorLocation(), Point);
+	
+	for (int i = 1; i < NumPoints; i++) {
+		Point = PathToFollow->SplineComponent->GetLocationAtSplinePoint(i, ESplineCoordinateSpace::World);
+		float DistanceToTarget2 = FVector::Dist(GetActorLocation(), Point);
+		if (DistanceToTarget > DistanceToTarget2) {
+			Ind = i;
+			DistanceToTarget = DistanceToTarget2;
+		}
+	}
+	return Ind;
+}
+
+
+void ANPlayerCharacter::OneWayBehavior() {
+	if (!PathToFollow) return;
+
+	if (CurrentSplineIndex < 0) {
+		CurrentSplineIndex = NearestSplinePoint();
+	}
+
+	FVector Target = GetNextTargetOnSpline(CurrentSplineIndex);
+	float DistanceToTarget = FVector::Dist(GetActorLocation(), Target);
+
+	if (CurrentSplineIndex == PathToFollow->SplineComponent->GetNumberOfSplinePoints() - 1 && DistanceToTarget < AcceptanceRadius) {
+		ArrivalBehavior(Target);
+	} else {
+		SeekBehavior(Target);
+		if (DistanceToTarget < AcceptanceRadius) {
+			CurrentSplineIndex++;
 		}
 	}
 }

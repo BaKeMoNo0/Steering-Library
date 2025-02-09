@@ -45,6 +45,12 @@ void APlayerCharacter::BeginPlay() {
 		if (ArrivalAction) {
 			EnhancedInputComponent->BindAction(ArrivalAction, ETriggerEvent::Triggered, this, &APlayerCharacter::SetArrivalBehaviorOnNPC);
 		}
+		if (CircuitAction) {
+			EnhancedInputComponent->BindAction(CircuitAction, ETriggerEvent::Triggered, this, &APlayerCharacter::SetCircuitBehaviorOnNPC);
+		}
+		if (OneWayAction){
+			EnhancedInputComponent->BindAction(OneWayAction, ETriggerEvent::Triggered, this, &APlayerCharacter::SetOneWayBehaviorOnNPC);
+		}
 	}
 }
 
@@ -87,4 +93,19 @@ void APlayerCharacter::SetArrivalBehaviorOnNPC() {
 		GameMode->MainMenuWidget->UpdateText("Arrival");
 	}
 }
+
+void APlayerCharacter::SetCircuitBehaviorOnNPC() {
+	if (NPCRef) {
+		NPCRef->SetBehavior(UEBehaviorType::Circuit);
+		GameMode->MainMenuWidget->UpdateText("Circuit");
+	}
+}
+
+void APlayerCharacter::SetOneWayBehaviorOnNPC() {
+	if (NPCRef) {
+		NPCRef->SetBehavior(UEBehaviorType::OneWay);
+		GameMode->MainMenuWidget->UpdateText("OneWay");
+	}
+}
+
 
