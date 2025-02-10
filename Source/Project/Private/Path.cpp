@@ -22,7 +22,7 @@ void APath::BeginPlay() {
 
 void APath::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
-	if (SplineComponent && PlayerCharacter  && (PlayerCharacter->CurrentBehavior == Circuit || PlayerCharacter->CurrentBehavior == OneWay)) {
+	if (SplineComponent && PlayerCharacter  && (PlayerCharacter->CurrentBehavior == Circuit || PlayerCharacter->CurrentBehavior == OneWay || PlayerCharacter->CurrentBehavior == TwoWay)) {
 		const int NumPoints = SplineComponent->GetNumberOfSplinePoints();
 		for (int i = 0; i < NumPoints - 1; i++) {
 			FVector Start = SplineComponent->GetLocationAtSplinePoint(i, ESplineCoordinateSpace::World);

@@ -18,4 +18,5 @@ enum UEBehaviorType : uint8 {
 	Arrival UMETA(DisplayName = "Arrival"),
 	Circuit UMETA(DisplayName = "Circuit"),
 	OneWay UMETA(DisplayName = "OneWay"),
+	TwoWay UMETA(DisplayName = "TwoWay"),
 };

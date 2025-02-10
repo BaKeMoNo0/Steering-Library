@@ -11,9 +11,9 @@
 
 ANPlayerCharacter::ANPlayerCharacter() {
  	PrimaryActorTick.bCanEverTick = true;
-	MaxSpeed = 600.0f;
+	MaxSpeed = 400.0f;
 	MaxForce = 200.0f;
-	Mass = 1.0f;
+	Mass = 40.0f;
 	CurrentBehavior = Walk;
 }
 
@@ -25,7 +25,6 @@ void ANPlayerCharacter::BeginPlay() {
 	if (!PathToFollow) {
 		for (TActorIterator<APath> It(GetWorld()); It; ++It) {
 			PathToFollow = *It;
-			UE_LOG(LogTemp, Warning, TEXT("Path trouvé automatiquement : %s"), *PathToFollow->GetName());
 			break;
 		}
 	}
@@ -63,34 +62,35 @@ void ANPlayerCharacter::ExecuteCurrentBehavior(FVector TargetLocation) {
 	case OneWay:
 		OneWayBehavior();
 		break;
+	case TwoWay:
+		TwoWayBehavior();
+		break;
 	default:
 		break;
 	}
 }
 
 
-FVector ANPlayerCharacter::CalculateSteeringForce(const FVector& DesiredVelocity) const {
-	FVector CurrentVelocity = GetCharacterMovement()->Velocity;
+FVector ANPlayerCharacter::CalculateSteeringForce(const FVector& DesiredVelocity) {
+	if (Velocity == FVector::ZeroVector) Velocity = GetCharacterMovement()->Velocity;
+	FVector CurrentVelocity = Velocity;
 	FVector Steering = DesiredVelocity - CurrentVelocity;
 	return Steering.GetClampedToMaxSize(MaxForce);
 }
 
 
 void ANPlayerCharacter::MoveWithSteering(const FVector& Steering) {
-	FVector CurrentVelocity = GetCharacterMovement()->Velocity;
 	FVector Acceleration = Steering / Mass;
-	FVector NewVelocity = CurrentVelocity + Acceleration;
+	FVector NewVelocity = Velocity + Acceleration;
 	NewVelocity = NewVelocity.GetClampedToMaxSize(MaxSpeed);
-	
+	Velocity = NewVelocity;
 	FVector NewForward = NewVelocity.GetSafeNormal();
 	AddMovementInput(NewForward, 1.0f);
 
 	if (!NewVelocity.IsNearlyZero()) {
-		FVector ApproximateUp = FVector::UpVector;
-		FVector NewRight = ApproximateUp.Cross(NewForward).GetSafeNormal(); // Calcul Axe Y
-		FVector NewUp = NewForward.Cross(NewRight).GetSafeNormal(); // Calcul Axe Z
-		FMatrix NewRotationMatrix(NewForward, NewRight, NewUp, FVector::ZeroVector);
-		FRotator NewRotation = NewRotationMatrix.Rotator();
+		FRotator NewRotation = NewVelocity.Rotation();
+		NewRotation.Pitch = 0;
+		NewRotation.Roll = 0;
 		SetActorRotation(NewRotation);
 	}
 }
@@ -153,9 +153,8 @@ void ANPlayerCharacter::EvadeBehavior(const FVector& Target) {
 void ANPlayerCharacter::ArrivalBehavior(const FVector& Target) {
 	FVector CurrentPosition = GetActorLocation();
 	float DistanceToTarget = FVector::Dist(CurrentPosition, Target);
-	float SlowingDistance = 600.0f;
-
-
+	float SlowingDistance = 200.0f;
+	
 	if (DistanceToTarget > SlowingDistance) {
 		SeekBehavior(Target);
 	} else {
@@ -167,10 +166,10 @@ void ANPlayerCharacter::ArrivalBehavior(const FVector& Target) {
 		float SpeedFactor = ClippedSpeed / MaxSpeed;
 		FVector Steering = CalculateSteeringForce(DesiredVelocity);
 
-		FVector CurrentVelocity = GetCharacterMovement()->Velocity;
 		FVector Acceleration = Steering / Mass;
-		FVector NewVelocity = CurrentVelocity + Acceleration;
+		FVector NewVelocity = Velocity + Acceleration;
 		NewVelocity = NewVelocity.GetClampedToMaxSize(MaxSpeed);
+		Velocity = NewVelocity;
 	
 		FVector NewForward = NewVelocity.GetSafeNormal();
 		AddMovementInput(NewForward, SpeedFactor);
@@ -202,11 +201,13 @@ void ANPlayerCharacter::CircuitBehavior() {
 	SeekBehavior(NextTarget);
 }
 
+
 FVector ANPlayerCharacter::GetNextTargetOnSpline(int& CurrentIndex) {
 	if (!PathToFollow) return FVector::ZeroVector;
 	FVector TargetPosition = PathToFollow->SplineComponent->GetLocationAtSplinePoint(CurrentIndex, ESplineCoordinateSpace::World);
 	return TargetPosition;
 }
+
 
 int ANPlayerCharacter::NearestSplinePoint() {
 	int Ind = 0;
@@ -245,6 +246,38 @@ void ANPlayerCharacter::OneWayBehavior() {
 			CurrentSplineIndex++;
 		}
 	}
+}
+
+
+void ANPlayerCharacter::TwoWayBehavior() {
+	if (!PathToFollow) return;
+
+	if (CurrentSplineIndex < 0) {
+		CurrentSplineIndex = NearestSplinePoint();
+		bIsReversing = false;
+	}
+
+	FVector Target = GetNextTargetOnSpline(CurrentSplineIndex);
+	float DistanceToTarget = FVector::Dist(GetActorLocation(), Target);
+	
+	if (DistanceToTarget < AcceptanceRadius) {
+		if (CurrentSplineIndex == 0) {
+			ArrivalBehavior(Target);
+			bIsReversing = false;
+			if (!GetVelocity().IsNearlyZero()) {
+				return;
+			}
+		}
+		else if (CurrentSplineIndex == PathToFollow->SplineComponent->GetNumberOfSplinePoints() - 1) {
+			ArrivalBehavior(Target);
+			bIsReversing = true;
+			if (!GetVelocity().IsNearlyZero()) {
+				return;
+			}
+		}
+		CurrentSplineIndex += (bIsReversing ? -1 : 1);
+	}
+	SeekBehavior(Target);
 }
 
 

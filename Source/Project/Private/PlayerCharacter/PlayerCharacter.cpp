@@ -51,6 +51,9 @@ void APlayerCharacter::BeginPlay() {
 		if (OneWayAction){
 			EnhancedInputComponent->BindAction(OneWayAction, ETriggerEvent::Triggered, this, &APlayerCharacter::SetOneWayBehaviorOnNPC);
 		}
+		if (TwoWayAction){
+			EnhancedInputComponent->BindAction(TwoWayAction, ETriggerEvent::Triggered, this, &APlayerCharacter::SetTwoWayBehaviorOnNPC);
+		}
 	}
 }
 
@@ -105,6 +108,13 @@ void APlayerCharacter::SetOneWayBehaviorOnNPC() {
 	if (NPCRef) {
 		NPCRef->SetBehavior(UEBehaviorType::OneWay);
 		GameMode->MainMenuWidget->UpdateText("OneWay");
+	}
+}
+
+void APlayerCharacter::SetTwoWayBehaviorOnNPC() {
+	if (NPCRef) {
+		NPCRef->SetBehavior(UEBehaviorType::TwoWay);
+		GameMode->MainMenuWidget->UpdateText("TwoWay");
 	}
 }
 

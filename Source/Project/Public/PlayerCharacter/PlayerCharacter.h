@@ -49,6 +49,9 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = Input)
 	UInputAction* OneWayAction;
+
+	UPROPERTY(EditAnywhere, Category = Input)
+	UInputAction* TwoWayAction;
 	
 	ANPlayerCharacter* NPCRef;
 	AProjectGameMode* GameMode;
@@ -60,4 +63,5 @@ public:
 	void SetArrivalBehaviorOnNPC();
 	void SetCircuitBehaviorOnNPC();
 	void SetOneWayBehaviorOnNPC();
+	void SetTwoWayBehaviorOnNPC();
 };

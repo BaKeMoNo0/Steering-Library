@@ -32,7 +32,7 @@ public:
 	UEBehaviorType CurrentBehavior;
 	void ExecuteCurrentBehavior(FVector TargetLocation);
 	void SetBehavior(UEBehaviorType NewBehavior);
-	FVector CalculateSteeringForce(const FVector& DesiredVelocity) const;
+	FVector CalculateSteeringForce(const FVector& DesiredVelocity);
 	void MoveWithSteering(const FVector& Steering);
 	
 	void SeekBehavior(const FVector& Target);
@@ -42,10 +42,13 @@ public:
 	void ArrivalBehavior(const FVector& Target);
 	void CircuitBehavior();
 	void OneWayBehavior();
+	void TwoWayBehavior();
 	FVector GetNextTargetOnSpline(int& CurrentIndex);
 	int NearestSplinePoint();
 
 	private:
 	float AcceptanceRadius = 200.0f;
 	int CurrentSplineIndex = -1;
+	bool bIsReversing;
+	FVector Velocity = FVector::ZeroVector;
 };
