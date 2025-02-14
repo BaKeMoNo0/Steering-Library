@@ -25,10 +25,15 @@ The library aims to include the following behaviors:
   - ✅ Two ways: The agent moves to an endpoint, then reverses direction back to the start, repeating the process indefinitely.
 
 # Steps
-  - Clone the repository: https://github.com/BaKeMoNo0/Steering-Library.git
-  - Open Unreal Engine and navigate to the cloned project folder.
-  - Open the .uproject file and allow Unreal Engine to rebuild necessary files if prompted.
-  - Compile and launch the project.
+1 - Clone the repository:
+    - https://github.com/BaKeMoNo0/Steering-Library.git
+2 - Generate Visual Studio project files
+    - Navigate to the project folder.
+    - Right-click on the .uproject file and select "Generate Visual Studio project files".
+
+3 - Open VS Code.
+    - Right-click on the .sln file and select "Open With" -> VsCode or an other IDE
+    - Compile and run the project
 
 # Usage
   Launch the project in Unreal Engine.
