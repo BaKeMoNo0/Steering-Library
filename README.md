@@ -25,8 +25,9 @@ The library aims to include the following behaviors:
   - ✅ Two ways: The agent moves to an endpoint, then reverses direction back to the start, repeating the process indefinitely.
 
 # Steps
-1 - Clone the repository:
+1 - Clone the repository
     - https://github.com/BaKeMoNo0/Steering-Library.git
+
 2 - Generate Visual Studio project files
     - Navigate to the project folder.
     - Right-click on the .uproject file and select "Generate Visual Studio project files".
