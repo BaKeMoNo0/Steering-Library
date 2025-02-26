@@ -25,6 +25,7 @@ public:
 	float MaxSpeed;
 	float MaxForce;
 	float Mass;
+	UPROPERTY()
 	APawn* PlayerPawn;
 	UPROPERTY(EditAnywhere, Category = "Path Following")
 	APath* PathToFollow;

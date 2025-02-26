@@ -15,7 +15,8 @@ class PROJECT_API APath : public AActor {
 	
 public:
 	APath();
-	
+
+	UPROPERTY()
 	ANPlayerCharacter* PlayerCharacter; 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Path")
 	USplineComponent* SplineComponent;

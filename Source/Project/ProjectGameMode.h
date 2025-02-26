@@ -8,21 +8,20 @@
 #include "ProjectGameMode.generated.h"
 
 UCLASS(minimalapi)
-class AProjectGameMode : public AGameModeBase
-{
+class AProjectGameMode : public AGameModeBase {
 	GENERATED_BODY()
 
-public:
-	AProjectGameMode();
-
+	
 protected:
 	virtual void BeginPlay() override;
 
 public:
 	UPROPERTY(EditAnywhere, Category = "UI")
 	TSubclassOf<UUserWidget> MainMenuWidgetClass;
+	UPROPERTY(BlueprintReadOnly, Category = "UI")
 	UMainMenuWidget* MainMenuWidget;
 
+	UPROPERTY()
 	APlayerController* PlayerController;
 };
 
