@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/SplineComponent.h"
 #include "GameFramework/Actor.h"
+#include "PlayerCharacter/PlayerCharacter.h"
 #include "Path.generated.h"
 
 class ANPlayerCharacter;
@@ -17,10 +18,12 @@ public:
 	APath();
 
 	UPROPERTY()
-	ANPlayerCharacter* PlayerCharacter; 
+	ANPlayerCharacter* NCPRef;
+	UPROPERTY()
+	APlayerCharacter* PlayerCharacter;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Path")
 	USplineComponent* SplineComponent;
-
+	
 
 protected:
 	virtual void BeginPlay() override;

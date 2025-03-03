@@ -14,15 +14,6 @@ class AProjectGameMode : public AGameModeBase {
 	
 protected:
 	virtual void BeginPlay() override;
-
-public:
-	UPROPERTY(EditAnywhere, Category = "UI")
-	TSubclassOf<UUserWidget> MainMenuWidgetClass;
-	UPROPERTY(BlueprintReadOnly, Category = "UI")
-	UMainMenuWidget* MainMenuWidget;
-
-	UPROPERTY()
-	APlayerController* PlayerController;
 };
 
 

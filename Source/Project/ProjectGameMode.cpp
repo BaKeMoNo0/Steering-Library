@@ -8,11 +8,4 @@
 
 void AProjectGameMode::BeginPlay(){
 	Super::BeginPlay();
-	PlayerController = GetWorld()->GetFirstPlayerController();
-	if (MainMenuWidgetClass) {
-		MainMenuWidget = Cast<UMainMenuWidget>(CreateWidget(GetWorld(), MainMenuWidgetClass));
-		if (MainMenuWidget) {
-			MainMenuWidget->AddToViewport();
-		}
-	}
 }

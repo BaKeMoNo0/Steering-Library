@@ -5,7 +5,9 @@
 
 #include "Kismet/GameplayStatics.h"
 #include "PlayerCharacter/EBehaviorType.h"
+#include "PlayerCharacter/NCPMovementComponent.h"
 #include "PlayerCharacter/NPlayerCharacter.h"
+#include "PlayerCharacter/PlayerCharacter.h"
 
 
 APath::APath() {
@@ -16,13 +18,14 @@ void APath::BeginPlay() {
 	Super::BeginPlay();
 
 	SplineComponent =  FindComponentByClass<USplineComponent>();
-	PlayerCharacter = Cast<ANPlayerCharacter>(UGameplayStatics::GetActorOfClass(GetWorld(), ANPlayerCharacter::StaticClass()));
+	NCPRef = Cast<ANPlayerCharacter>(UGameplayStatics::GetActorOfClass(GetWorld(), ANPlayerCharacter::StaticClass()));
+	PlayerCharacter = Cast<APlayerCharacter>(UGameplayStatics::GetActorOfClass(GetWorld(), APlayerCharacter::StaticClass()));
 }
 
 
 void APath::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
-	if (SplineComponent && PlayerCharacter  && (PlayerCharacter->CurrentBehavior == Circuit || PlayerCharacter->CurrentBehavior == OneWay || PlayerCharacter->CurrentBehavior == TwoWay)) {
+	if (SplineComponent && NCPRef  && (PlayerCharacter->NPCMovementComponent->CurrentBehavior == Circuit || PlayerCharacter->NPCMovementComponent->CurrentBehavior == OneWay || PlayerCharacter->NPCMovementComponent->CurrentBehavior == TwoWay)) {
 		const int NumPoints = SplineComponent->GetNumberOfSplinePoints();
 		for (int i = 0; i < NumPoints - 1; i++) {
 			FVector Start = SplineComponent->GetLocationAtSplinePoint(i, ESplineCoordinateSpace::World);
