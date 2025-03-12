@@ -4,9 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "EBehaviorType.h"
-#include "Path.h"
 #include "PlayerCharacter.h"
 #include "Components/ActorComponent.h"
+#include "Word/Spline/CircuitSpline.h"
 #include "NCPMovementComponent.generated.h"
 
 
@@ -34,7 +34,7 @@ public:
 	UPROPERTY()
 	ANPlayerCharacter* NPCRef;
 	UPROPERTY()
-	APath* PathToFollow;
+	ACircuitSpline* PathToFollow;
 	UPROPERTY()
 	APlayerCharacter* OwnerCharacter;
 

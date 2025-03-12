@@ -24,7 +24,7 @@ void UNCPMovementComponent::BeginPlay() {
 	NPCRef = Cast<ANPlayerCharacter>(UGameplayStatics::GetActorOfClass(GetWorld(), ANPlayerCharacter::StaticClass()));
 	
 	if (!PathToFollow) {
-		for (TActorIterator<APath> It(GetWorld()); It; ++It) {
+		for (TActorIterator<ACircuitSpline> It(GetWorld()); It; ++It) {
 			PathToFollow = *It;
 			break;
 		}

@@ -4,11 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "NPlayerCharacter.generated.h"
+#include "PlayerCharacterLab2.generated.h"
 
 UCLASS()
-class PROJECT_API ANPlayerCharacter : public ACharacter {
+class PROJECT_API APlayerCharacterLab2 : public ACharacter
+{
 	GENERATED_BODY()
+
+public:
+	APlayerCharacterLab2();
 
 protected:
 	virtual void BeginPlay() override;
