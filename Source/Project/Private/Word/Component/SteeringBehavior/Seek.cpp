@@ -11,7 +11,7 @@ void USeek::ExecuteBehavior(ACharacter* NPC, FVector TargetLocation, USteeringCo
 	if (!NPC) return;
 
 	FVector CurrentPosition = NPC->GetActorLocation();
-	FVector DesiredVelocity = (TargetLocation - CurrentPosition).GetSafeNormal() * MaxSpeed;
+	FVector DesiredVelocity = (TargetLocation - CurrentPosition).GetSafeNormal() * SteeringComp->MaxSpeed;
 	FVector Steering = SteeringComp->CalculateSteeringForce(NPC, DesiredVelocity);
 	SteeringComp->MoveWithSteering(NPC, Steering);
 }

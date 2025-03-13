@@ -7,15 +7,22 @@
 #include "NPC_AIController.generated.h"
 
 
+class ANPCCharacter;
+class USteeringComponent;
+class USeek;
+
 UCLASS()
 class PROJECT_API ANPC_AIController : public AAIController {
 	GENERATED_BODY()
 
+	FVector CurrentTargetLocation;
+	UPROPERTY()
+	ANPCCharacter* OwnerCharacter;
+
 public:
     virtual void BeginPlay() override;
+	virtual void OnPossess(APawn* InPawn) override;
+	virtual void Tick(float DeltaTime) override;
 
     void MoveToTarget(FVector TargetLocation);
-
-protected:
-	virtual void OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result) override;
 };

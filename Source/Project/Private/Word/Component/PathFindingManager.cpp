@@ -89,7 +89,7 @@ TArray<AIntersectionPath*> UPathFindingManager::Dijkstra() {
     // Rebuild the path from the best target
     TArray<AIntersectionPath*> ShortestPath;
     AIntersectionPath* Current = FinalTarget;
-    while (Current) {
+    while (Current !=  OwnerCharacter->StartingIntersectionPath) {
         ShortestPath.Insert(Current, 0);  
         Current = Predecessors[Current];
     }

@@ -12,7 +12,6 @@ class USteeringComponent;
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PROJECT_API USeek : public UActorComponent {
 	GENERATED_BODY()
-	float MaxSpeed = 400.0f;
 public:
 	void ExecuteBehavior(ACharacter* NPC, FVector TargetLocation, USteeringComponent* SteeringComp);
 };

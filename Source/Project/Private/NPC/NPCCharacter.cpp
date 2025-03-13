@@ -31,8 +31,8 @@ void ANPCCharacter::BeginPlay() {
 	Super::BeginPlay();
 
 	PathFindingManager = FindComponentByClass<UPathFindingManager>();
-	SteeringComponent = FindComponentByClass<USteeringComponent>();
 	SeekComp = FindComponentByClass<USeek>();
+	SteeringComp = FindComponentByClass<USteeringComponent>();
 	AIController = Cast<ANPC_AIController>(GetController());
 }
 
@@ -71,11 +71,12 @@ void ANPCCharacter::FollowPath(const TArray<AIntersectionPath*>& Path) {
 
 
 void ANPCCharacter::MoveToNextPoint() {
-	//if (CurrentPathIndex > CurrentPath.Num()) return;
+	if (CurrentPathIndex > CurrentPath.Num()) return;
 
 	AIntersectionPath* NextPoint = CurrentPath[CurrentPathIndex];
 	if (!NextPoint) return;
 	if (AIController) {
+		bIsMoving = true;
 		FVector Location = FVector(NextPoint->GetActorLocation().X, NextPoint->GetActorLocation().Y, 140.0f);
 		AIController->MoveToTarget(Location);
 	}
@@ -87,13 +88,15 @@ void ANPCCharacter::OnReachDestination() {
 
 	if (CurrentPathIndex < CurrentPath.Num()) {
 		MoveToNextPoint();
-	}
-	if (CurrentPathIndex == CurrentPath.Num()){
+	} 
+	else if (CurrentPathIndex == CurrentPath.Num()){
 		AIntersectionPath* TargetPath = CurrentPath.Last();
 		if (TargetPath && TargetPath->ChickenTarget) {
-			FVector Location = FVector(TargetPath->ChickenTarget->GetActorLocation().X - 350, TargetPath->ChickenTarget->GetActorLocation().Y, TargetPath->ChickenTarget->GetActorLocation().Z);
+			FVector Location = FVector(TargetPath->ChickenTarget->GetActorLocation().X - 100, TargetPath->ChickenTarget->GetActorLocation().Y, TargetPath->ChickenTarget->GetActorLocation().Z);
 			MoveToTarget(Location);
 		}
+	} else {
+		bIsMoving = false;
 	}
 }
 
