@@ -5,8 +5,6 @@
 
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
-#include "PlayerCharacter/NCPMovementComponent.h"
-#include "PlayerCharacter/NPlayerCharacter.h"
 
 void APlayerControllerLab1::BeginPlay() {
 	Super::BeginPlay();
@@ -60,41 +58,41 @@ void APlayerControllerLab1::SetupInputComponent() {
 }
 
 void APlayerControllerLab1::SetSeekBehaviorOnNPC() {
-	ControlledCharacter->NPCMovementComponent->SetBehavior(UEBehaviorType::Seek);
+	ControlledCharacter->SetBehavior(UEBehaviorType::Seek);
 	MainMenuWidget->UpdateText("Seek");
 }
 
 void APlayerControllerLab1::SetFleeBehaviorOnNPC() {
-	ControlledCharacter->NPCMovementComponent->SetBehavior(UEBehaviorType::Flee);
+	ControlledCharacter->SetBehavior(UEBehaviorType::Flee);
 	MainMenuWidget->UpdateText("Flee");
 }
 
 void APlayerControllerLab1::SetPursuitBehaviorOnNPC() {
-	ControlledCharacter->NPCMovementComponent->SetBehavior(UEBehaviorType::Pursuit);
+	ControlledCharacter->SetBehavior(UEBehaviorType::Pursuit);
 	MainMenuWidget->UpdateText("Pursuit");
 }
 
 void APlayerControllerLab1::SetEvadeBehaviorOnNPC() {
-	ControlledCharacter->NPCMovementComponent->SetBehavior(UEBehaviorType::Evade);
+	ControlledCharacter->SetBehavior(UEBehaviorType::Evade);
 	MainMenuWidget->UpdateText("Evade");
 }
 
 void APlayerControllerLab1::SetArrivalBehaviorOnNPC() {
-	ControlledCharacter->NPCMovementComponent->SetBehavior(UEBehaviorType::Arrival);
+	ControlledCharacter->SetBehavior(UEBehaviorType::Arrival);
 	MainMenuWidget->UpdateText("Arrival");
 }
 
 void APlayerControllerLab1::SetCircuitBehaviorOnNPC() {
-	ControlledCharacter->NPCMovementComponent->SetBehavior(UEBehaviorType::Circuit);
+	ControlledCharacter->SetBehavior(UEBehaviorType::Circuit);
 	MainMenuWidget->UpdateText("Circuit");
 }
 
 void APlayerControllerLab1::SetOneWayBehaviorOnNPC() {
-	ControlledCharacter->NPCMovementComponent->SetBehavior(UEBehaviorType::OneWay);
+	ControlledCharacter->SetBehavior(UEBehaviorType::OneWay);
 	MainMenuWidget->UpdateText("OneWay");
 }
 
 void APlayerControllerLab1::SetTwoWayBehaviorOnNPC() {
-	ControlledCharacter->NPCMovementComponent->SetBehavior(UEBehaviorType::TwoWay);
+	ControlledCharacter->SetBehavior(UEBehaviorType::TwoWay);
 	MainMenuWidget->UpdateText("TwoWay");
 }

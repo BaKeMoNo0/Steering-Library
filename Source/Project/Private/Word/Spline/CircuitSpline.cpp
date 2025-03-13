@@ -4,7 +4,6 @@
 #include "Word/Spline/CircuitSpline.h"
 
 #include "Kismet/GameplayStatics.h"
-#include "PlayerCharacter/NCPMovementComponent.h"
 
 
 ACircuitSpline::ACircuitSpline() {
@@ -24,7 +23,7 @@ void ACircuitSpline::BeginPlay() {
 void ACircuitSpline::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
-	if (SplineComponent && NCPRef  && (PlayerCharacter->NPCMovementComponent->CurrentBehavior == Circuit || PlayerCharacter->NPCMovementComponent->CurrentBehavior == OneWay || PlayerCharacter->NPCMovementComponent->CurrentBehavior == TwoWay)) {
+	if (SplineComponent && NCPRef  && (PlayerCharacter->CurrentBehavior == Circuit || PlayerCharacter->CurrentBehavior == OneWay || PlayerCharacter->CurrentBehavior == TwoWay)) {
 		const int NumPoints = SplineComponent->GetNumberOfSplinePoints();
 		for (int i = 0; i < NumPoints - 1; i++) {
 			FVector Start = SplineComponent->GetLocationAtSplinePoint(i, ESplineCoordinateSpace::World);

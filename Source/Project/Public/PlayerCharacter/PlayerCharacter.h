@@ -3,11 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "EBehaviorType.h"
 #include "GameFramework/Character.h"
 #include "PlayerCharacter.generated.h"
 
 
-class UNCPMovementComponent;
+//class UNCPMovementComponent;
 class UInputMappingContext;
 
 UCLASS()
@@ -19,6 +20,7 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-	UPROPERTY()
-	UNCPMovementComponent* NPCMovementComponent;
+	UEBehaviorType CurrentBehavior;
+	
+	void SetBehavior(const UEBehaviorType NewBehavior);
 };

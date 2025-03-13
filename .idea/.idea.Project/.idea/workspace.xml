@@ -14,37 +14,16 @@
   <component name="ChangeListManager">
     <list default="true" id="17109111-de2b-402c-a23b-2e9c5efacfb7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultInput.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultInput.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/BP_ProjectGameMode.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/BP_ProjectGameMode.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/BP_ProjectGameMode1.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Game/Character/Blueprints/BP_PlayerCharacter2.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Game/Character/Blueprints/BP_PlayerControllerLab1.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Game/Character/Blueprints/MyNPlayerCharacter.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Game/Level/Lab1.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Game/Level/Lab1.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Game/Level/Lab2.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Game/Level/Lab2.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Game/Level/Main.umap" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Game/Level/MainMenuLevel.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Game/Level/MainMenuLevel.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Game/Level/Map.umap" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Game/Material/M_DirtPath.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Game/Word/BP_Path.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Game/Word/BP_SplineIntersection.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Game/Word/BP_SplineIntersection2.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Game/Word/BP_SplinePath.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Game/Word/BP_SplinePath2.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Game/Word/Main.umap" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Game/Word/Map.umap" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Game/Word/Mesh/MI_CrackedAsphalt.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Game/Word/Mesh/SM_Intersection.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Game/Word/Mesh/SM_Intersection2.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Game/Word/Mesh/SM_Path.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/Project.uproject" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Project/Private/Path.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Project/Private/PlayerCharacter/NCPMovementComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Private/PlayerCharacter/NCPMovementComponent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Project/Project.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Project.Build.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Project/Public/Path.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Project/Public/PlayerCharacter/NCPMovementComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Public/PlayerCharacter/NCPMovementComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Game/Character/Blueprints/Lab1/BP_PlayerCharacter2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Game/Character/Blueprints/Lab1/BP_PlayerCharacter2.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Game/Character/Blueprints/Lab1/MyNPlayerCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Game/Character/Blueprints/Lab1/MyNPlayerCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Project/Private/PlayerCharacter/NCPMovementComponent.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Project/Private/PlayerCharacter/NPlayerCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Private/PlayerCharacter/NPlayerCharacter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Project/Private/PlayerCharacter/PlayerCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Private/PlayerCharacter/PlayerCharacter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Project/Private/PlayerCharacter/PlayerControllerLab1.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Private/PlayerCharacter/PlayerControllerLab1.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Project/Private/Word/Spline/CircuitSpline.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Private/Word/Spline/CircuitSpline.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Project/Public/PlayerCharacter/NCPMovementComponent.h" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Project/Public/PlayerCharacter/NPlayerCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Public/PlayerCharacter/NPlayerCharacter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Project/Public/PlayerCharacter/PlayerCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Public/PlayerCharacter/PlayerCharacter.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,18 +44,35 @@
     <setting file="file://$PROJECT_DIR$/Source/Project/Private/GameModeLab2.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Project/Private/NPC/NPCCharacter.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Project/Private/NPC/NPC_AIController.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Project/Private/PlayerCharacter/NCPMovementComponent.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Project/Private/PlayerCharacter/PlayerCharacterLab2.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Project/Private/PlayerCharacter/PlayerControllerLab1.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Project/Private/Word/Component/PathFindingManager.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Project/Private/Word/Component/SteeringBehavior/Arrival.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Project/Private/Word/Component/SteeringBehavior/Circuit.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Project/Private/Word/Component/SteeringBehavior/Evade.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Project/Private/Word/Component/SteeringBehavior/Flee.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Project/Private/Word/Component/SteeringBehavior/NPCBehaviorManager.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Project/Private/Word/Component/SteeringBehavior/OneWay.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Project/Private/Word/Component/SteeringBehavior/Pursuit.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Project/Private/Word/Component/SteeringBehavior/SplineNavigationComponent.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Project/Private/Word/Component/SteeringBehavior/TwoWay.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Project/Private/Word/Spawn/SpawnManager.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Project/Public/GameModeLab2.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Project/Public/NPC/NPCCharacter.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Project/Public/NPC/NPC_AIController.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Project/Public/PlayerCharacter/NCPMovementComponent.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Project/Public/PlayerCharacter/PlayerCharacterLab2.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Project/Public/PlayerCharacter/PlayerControllerLab1.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Project/Public/Word/Component/PathFindingManager.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Project/Public/Word/Component/SteeringBehavior/Arrival.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Project/Public/Word/Component/SteeringBehavior/Circuit.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Project/Public/Word/Component/SteeringBehavior/Evade.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Project/Public/Word/Component/SteeringBehavior/NPCBehaviorManager.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Project/Public/Word/Component/SteeringBehavior/OneWay.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Project/Public/Word/Component/SteeringBehavior/Pursuit.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Project/Public/Word/Component/SteeringBehavior/Seek.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Project/Public/Word/Component/SteeringBehavior/SplineNavigationComponent.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Project/Public/Word/Component/SteeringBehavior/SteeringComponent.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Project/Public/Word/Component/SteeringBehavior/TwoWay.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Project/Public/Word/Path/IntersectionPath.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Project/Public/Word/Path/SimplePath.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Project/Public/Word/Spawn/SpawnManager.h" root0="FORCE_HIGHLIGHTING" />
@@ -261,7 +257,7 @@
       <workItem from="1741766502001" duration="11034000" />
       <workItem from="1741781632031" duration="1182000" />
       <workItem from="1741782856016" duration="5387000" />
-      <workItem from="1741791485513" duration="1966000" />
+      <workItem from="1741791485513" duration="30343000" />
     </task>
     <servers />
   </component>
