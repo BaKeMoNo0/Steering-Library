@@ -4,9 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "PlayerCharacter/NPlayerCharacter.h"
 #include "OneWay.generated.h"
 
+
+class UArrival;
+class USteeringComponent;
+class USplineNavigationComponent;
+class USeek;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PROJECT_API UOneWay : public UActorComponent {
@@ -15,5 +19,5 @@ class PROJECT_API UOneWay : public UActorComponent {
 	float AcceptanceRadius = 200.0f;
 	int CurrentSplineIndex = -1;
 public:
-	void ExecuteBehavior(ANPlayerCharacter* NPC);	
+	void ExecuteBehavior(ACharacter* NPC, USeek* SeekComp, USplineNavigationComponent* SplineComp, USteeringComponent* SteeringComp, UArrival* ArrivalComp);	
 };

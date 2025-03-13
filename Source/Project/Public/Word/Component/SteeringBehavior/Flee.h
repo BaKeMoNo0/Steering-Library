@@ -4,9 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "PlayerCharacter/NPlayerCharacter.h"
 #include "Flee.generated.h"
 
+
+class USteeringComponent;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PROJECT_API UFlee : public UActorComponent {
@@ -14,5 +15,5 @@ class PROJECT_API UFlee : public UActorComponent {
 	float MaxSpeed = 400.0f;
 
 public:
-	void ExecuteBehavior(ANPlayerCharacter* NPC, FVector TargetLocation);
+	void ExecuteBehavior(ACharacter* NPC, FVector TargetLocation, USteeringComponent* SteeringComp);
 };

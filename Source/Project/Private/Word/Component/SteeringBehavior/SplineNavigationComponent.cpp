@@ -16,14 +16,14 @@ void USplineNavigationComponent::BeginPlay() {
 	}
 }
 
-FVector USplineNavigationComponent::GetNextTargetOnSpline(ANPlayerCharacter* NPC, int& CurrentIndex) {
+FVector USplineNavigationComponent::GetNextTargetOnSpline(ACharacter* NPC, int& CurrentIndex) {
 	if (!PathToFollow) return FVector::ZeroVector;
 	FVector TargetPosition = PathToFollow->SplineComponent->GetLocationAtSplinePoint(CurrentIndex, ESplineCoordinateSpace::World);
 	return TargetPosition;
 }
 
 
-int USplineNavigationComponent::NearestSplinePoint(ANPlayerCharacter* NPC) {
+int USplineNavigationComponent::NearestSplinePoint(ACharacter* NPC) {
 	int Ind = 0;
 	if (!PathToFollow || !PathToFollow->SplineComponent) return -2;
 	int NumPoints = PathToFollow->SplineComponent->GetNumberOfSplinePoints();

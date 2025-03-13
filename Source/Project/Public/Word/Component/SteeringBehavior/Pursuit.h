@@ -4,10 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "PlayerCharacter/NPlayerCharacter.h"
-#include "PlayerCharacter/PlayerCharacter.h"
 #include "Pursuit.generated.h"
 
+
+class USteeringComponent;
+class USeek;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PROJECT_API UPursuit : public UActorComponent
@@ -15,5 +16,5 @@ class PROJECT_API UPursuit : public UActorComponent
 	GENERATED_BODY()
 
 public:	
-	void ExecuteBehavior(ANPlayerCharacter* NPC, FVector TargetLocation, APlayerCharacter* Player);	
+	void ExecuteBehavior(ACharacter* NPC, FVector TargetLocation, ACharacter* Player, USeek* SeekComp, USteeringComponent* SteeringComp);	
 };

@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "PlayerCharacter/NPlayerCharacter.h"
 #include "SteeringComponent.generated.h"
 
 
@@ -13,8 +12,8 @@ class PROJECT_API USteeringComponent : public UActorComponent {
 	GENERATED_BODY()
 
 public:
-	FVector CalculateSteeringForce(ANPlayerCharacter* NPC, const FVector& DesiredVelocity);
-	void MoveWithSteering(ANPlayerCharacter* NPC, const FVector& Steering);
+	FVector CalculateSteeringForce(ACharacter* NPC, const FVector& DesiredVelocity);
+	void MoveWithSteering(ACharacter* NPC, const FVector& Steering);
 
 	FVector Velocity = FVector::ZeroVector;
 	float MaxSpeed = 400.0f;

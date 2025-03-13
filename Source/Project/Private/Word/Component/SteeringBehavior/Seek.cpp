@@ -3,14 +3,16 @@
 
 #include "Word/Component/SteeringBehavior/Seek.h"
 
+#include "GameFramework/Character.h"
 #include "Word/Component/SteeringBehavior/SteeringComponent.h"
 
 
-void USeek::ExecuteBehavior(ANPlayerCharacter* NPC, FVector TargetLocation) {
+void USeek::ExecuteBehavior(ACharacter* NPC, FVector TargetLocation, USteeringComponent* SteeringComp) {
 	if (!NPC) return;
 
 	FVector CurrentPosition = NPC->GetActorLocation();
 	FVector DesiredVelocity = (TargetLocation - CurrentPosition).GetSafeNormal() * MaxSpeed;
-	FVector Steering = NPC->SteeringComp->CalculateSteeringForce(NPC,DesiredVelocity);
-	NPC->SteeringComp->MoveWithSteering(NPC, Steering);
+	FVector Steering = SteeringComp->CalculateSteeringForce(NPC, DesiredVelocity);
+	SteeringComp->MoveWithSteering(NPC, Steering);
 }
+

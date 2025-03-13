@@ -16,9 +16,7 @@ void UPathFindingManager::BeginPlay() {
 
 TArray<AIntersectionPath*> UPathFindingManager::Dijkstra() {
     AIntersectionPath* StartPath = OwnerCharacter->StartingIntersectionPath;
-    AIntersectionPath* TargetPath = ChickensTargets[0]->StartingIntersectionPath;
-
-    if (!StartPath || !TargetPath) return TArray<AIntersectionPath*>();
+    if (!StartPath || ChickensTargets.Num() == 0) return TArray<AIntersectionPath*>();
     
     // Init
     TMap<AIntersectionPath*, float> Distances;
@@ -35,6 +33,9 @@ TArray<AIntersectionPath*> UPathFindingManager::Dijkstra() {
 
     Distances[StartPath] = 0.0f;
 
+    TArray<AIntersectionPath*> BestTargets;
+    float BestCost = FLT_MAX;
+    
     // Start Dijkstra
     while (UnvisitedNodes.Num() > 0) {
         AIntersectionPath* CurrentNode = nullptr;
@@ -47,16 +48,26 @@ TArray<AIntersectionPath*> UPathFindingManager::Dijkstra() {
             }
         }
         if (!CurrentNode) break;
-        
         UnvisitedNodes.Remove(CurrentNode);
-
-        if (CurrentNode == TargetPath) {
-            break;
+        
+        for (ANPCCharacter* TargetChicken : ChickensTargets) {
+            if (TargetChicken && TargetChicken->StartingIntersectionPath == CurrentNode) {
+                float TargetCost = Distances[CurrentNode];
+                if (TargetCost < BestCost) {
+                    BestCost = TargetCost;
+                    BestTargets.Empty();
+                    BestTargets.Add(CurrentNode);
+                    CurrentNode->ChickenTarget = TargetChicken;
+                }
+                else if (TargetCost == BestCost) {
+                    BestTargets.Add(CurrentNode);
+                }
+            }
         }
 
         // Update neighbor distances
         for (ASimplePath* Path : CurrentNode->ConnectedPaths) {
-            AIntersectionPath* Neighbor = Path->GetOtherIntersection(CurrentNode);  // Get neighbor intersection
+            AIntersectionPath* Neighbor = Path->GetOtherIntersection(CurrentNode);  
             if (Neighbor) {
                 float NewDistance = Distances[CurrentNode] + Path->GetCost();
                 if (NewDistance < Distances[Neighbor]) {
@@ -66,12 +77,20 @@ TArray<AIntersectionPath*> UPathFindingManager::Dijkstra() {
             }
         }
     }
+    if (BestTargets.Num() == 0) return TArray<AIntersectionPath*>();
 
-    // Rebuild the path from the target
+    AIntersectionPath* FinalTarget = BestTargets[0];
+    for (AIntersectionPath* Target : BestTargets) {
+        if (Distances[Target] < Distances[FinalTarget]) {
+            FinalTarget = Target;
+        }
+    }
+
+    // Rebuild the path from the best target
     TArray<AIntersectionPath*> ShortestPath;
-    AIntersectionPath* Current = TargetPath;
+    AIntersectionPath* Current = FinalTarget;
     while (Current) {
-        ShortestPath.Insert(Current, 0);  // Insert at the beginning to rebuild the path
+        ShortestPath.Insert(Current, 0);  
         Current = Predecessors[Current];
     }
     return ShortestPath;

@@ -4,14 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "PlayerCharacter/NPlayerCharacter.h"
 #include "Seek.generated.h"
 
+
+class USteeringComponent;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PROJECT_API USeek : public UActorComponent {
 	GENERATED_BODY()
 	float MaxSpeed = 400.0f;
 public:
-	void ExecuteBehavior(ANPlayerCharacter* NPC, FVector TargetLocation);
+	void ExecuteBehavior(ACharacter* NPC, FVector TargetLocation, USteeringComponent* SteeringComp);
 };

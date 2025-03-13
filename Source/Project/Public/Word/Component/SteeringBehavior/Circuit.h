@@ -4,10 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "PlayerCharacter/NPlayerCharacter.h"
-#include "PlayerCharacter/PlayerCharacter.h"
 #include "Circuit.generated.h"
 
+
+class USplineNavigationComponent;
+class USteeringComponent;
+class USeek;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PROJECT_API UCircuit : public UActorComponent{
@@ -16,5 +18,5 @@ class PROJECT_API UCircuit : public UActorComponent{
 	float AcceptanceRadius = 200.0f;
 	int CurrentSplineIndex = -1;
 public:
-	void ExecuteBehavior(ANPlayerCharacter* NPC);	
+	void ExecuteBehavior(ACharacter* NPC, USeek* SeekComp, USplineNavigationComponent* SplineComp, USteeringComponent* SteeringComp);	
 };

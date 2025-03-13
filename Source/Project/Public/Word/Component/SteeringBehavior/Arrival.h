@@ -3,8 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Seek.h"
+#include "SteeringComponent.h"
 #include "Components/ActorComponent.h"
-#include "PlayerCharacter/NPlayerCharacter.h"
 #include "Arrival.generated.h"
 
 
@@ -16,5 +17,5 @@ class PROJECT_API UArrival : public UActorComponent {
 	float Mass = 40.0f;
 
 public:	
-	void ExecuteBehavior(ANPlayerCharacter* NPC, FVector TargetLocation);	
+	void ExecuteBehavior(ACharacter* NPC, FVector TargetLocation, USteeringComponent* SteeringComp, USeek* SeekComp);	
 };

@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "PlayerCharacter/NPlayerCharacter.h"
 #include "Word/Spline/CircuitSpline.h"
 #include "SplineNavigationComponent.generated.h"
 
@@ -21,6 +20,6 @@ public:
 	UPROPERTY()
 	ACircuitSpline* PathToFollow;
 	
-	FVector GetNextTargetOnSpline(ANPlayerCharacter* NPC, int& CurrentIndex);
-	int NearestSplinePoint(ANPlayerCharacter* NPC);
+	FVector GetNextTargetOnSpline(ACharacter* NPC, int& CurrentIndex);
+	int NearestSplinePoint(ACharacter* NPC);
 };

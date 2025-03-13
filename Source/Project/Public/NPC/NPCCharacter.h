@@ -8,6 +8,8 @@
 #include "Word/Path/SimplePath.h"
 #include "NPCCharacter.generated.h"
 
+class USeek;
+class USteeringComponent;
 class UPathFindingManager;
 
 UCLASS()
@@ -33,13 +35,18 @@ public:
 	TArray<AIntersectionPath*> CurrentPath;
 	UPROPERTY()
 	ANPC_AIController* AIController;
+	UPROPERTY()
+	USteeringComponent* SteeringComponent;
+	UPROPERTY()
+	USeek* SeekComp;
+	
 	
 	void CheckOverlappingPaths();
 	void FollowPath(const TArray<AIntersectionPath*>& Path);
 	void MoveToNextPoint();
 	void OnReachDestination();
 	void UpdatePath(const TArray<AIntersectionPath*>& NewPath);
-	
+	void MoveToTarget(FVector TargetPosition);
 protected:
 	virtual void BeginPlay() override;
 };

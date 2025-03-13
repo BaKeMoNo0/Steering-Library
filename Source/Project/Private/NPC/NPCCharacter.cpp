@@ -5,6 +5,8 @@
 
 #include "Components/BoxComponent.h"
 #include "Word/Component/PathFindingManager.h"
+#include "Word/Component/SteeringBehavior/Seek.h"
+#include "Word/Component/SteeringBehavior/SteeringComponent.h"
 #include "Word/Path/IntersectionPath.h"
 
 
@@ -29,16 +31,18 @@ void ANPCCharacter::BeginPlay() {
 	Super::BeginPlay();
 
 	PathFindingManager = FindComponentByClass<UPathFindingManager>();
+	SteeringComponent = FindComponentByClass<USteeringComponent>();
+	SeekComp = FindComponentByClass<USeek>();
 	AIController = Cast<ANPC_AIController>(GetController());
 }
 
 
 void ANPCCharacter::CheckOverlappingPaths() {
 	if (CollisionBox) {
-		FVector BoxExtent = CollisionBox->GetScaledBoxExtent();
+		/*FVector BoxExtent = CollisionBox->GetScaledBoxExtent();
 		FVector BoxCenter = CollisionBox->GetComponentLocation();
 
-		DrawDebugBox(GetWorld(), BoxCenter, BoxExtent, FColor::Yellow, true, 10.0f);
+		DrawDebugBox(GetWorld(), BoxCenter, BoxExtent, FColor::Yellow, true, 10.0f);*/
 		
 		TArray<AActor*> OverlappingActors;
 		CollisionBox->GetOverlappingActors(OverlappingActors);
@@ -67,7 +71,7 @@ void ANPCCharacter::FollowPath(const TArray<AIntersectionPath*>& Path) {
 
 
 void ANPCCharacter::MoveToNextPoint() {
-	if (CurrentPathIndex >= CurrentPath.Num()) return;
+	//if (CurrentPathIndex > CurrentPath.Num()) return;
 
 	AIntersectionPath* NextPoint = CurrentPath[CurrentPathIndex];
 	if (!NextPoint) return;
@@ -84,6 +88,13 @@ void ANPCCharacter::OnReachDestination() {
 	if (CurrentPathIndex < CurrentPath.Num()) {
 		MoveToNextPoint();
 	}
+	if (CurrentPathIndex == CurrentPath.Num()){
+		AIntersectionPath* TargetPath = CurrentPath.Last();
+		if (TargetPath && TargetPath->ChickenTarget) {
+			FVector Location = FVector(TargetPath->ChickenTarget->GetActorLocation().X - 350, TargetPath->ChickenTarget->GetActorLocation().Y, TargetPath->ChickenTarget->GetActorLocation().Z);
+			MoveToTarget(Location);
+		}
+	}
 }
 
 
@@ -91,4 +102,10 @@ void ANPCCharacter::UpdatePath(const TArray<AIntersectionPath*>& NewPath) {
 	if (NewPath.Num() == 0) return;
     
 	FollowPath(NewPath);
+}
+
+void ANPCCharacter::MoveToTarget(FVector TargetPosition) {
+	if (AIController) {
+		AIController->MoveToTarget(TargetPosition);
+	}
 }

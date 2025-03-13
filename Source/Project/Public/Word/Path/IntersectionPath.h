@@ -7,6 +7,8 @@
 #include "GameFramework/Actor.h"
 #include "IntersectionPath.generated.h"
 
+class ANPCCharacter;
+
 UCLASS()
 class PROJECT_API AIntersectionPath : public AActor {
 	GENERATED_BODY()
@@ -18,6 +20,8 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, Category="Paths")
 	TArray<ASimplePath*> ConnectedPaths;
+	UPROPERTY()
+	ANPCCharacter* ChickenTarget = nullptr;
 	void GetAllNeighbors();
 	
 protected:

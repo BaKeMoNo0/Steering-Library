@@ -8,27 +8,27 @@
 #include "Word/Component/SteeringBehavior/SplineNavigationComponent.h"
 
 
-void UTwoWay::ExecuteBehavior(ANPlayerCharacter* NPC) {
-	if (!NPC->SplineComp->PathToFollow) return;
+void UTwoWay::ExecuteBehavior(ACharacter* NPC, USeek* SeekComp, USplineNavigationComponent* SplineComp, USteeringComponent* SteeringComp, UArrival* ArrivalComp) {
+	if (!SplineComp->PathToFollow) return;
 
 	if (CurrentSplineIndex < 0) {
-		CurrentSplineIndex = NPC->SplineComp->NearestSplinePoint(NPC);
+		CurrentSplineIndex = SplineComp->NearestSplinePoint(NPC);
 		bIsReversing = false;
 	}
 
-	FVector Target = NPC->SplineComp->GetNextTargetOnSpline(NPC, CurrentSplineIndex);
+	FVector Target = SplineComp->GetNextTargetOnSpline(NPC, CurrentSplineIndex);
 	float DistanceToTarget = FVector::Dist(NPC->GetActorLocation(), Target);
 	
 	if (DistanceToTarget < AcceptanceRadius) {
 		if (CurrentSplineIndex == 0) {
-			NPC->ArrivalComp->ExecuteBehavior(NPC, Target);
+			ArrivalComp->ExecuteBehavior(NPC, Target, SteeringComp, SeekComp);
 			bIsReversing = false;
 			if (!NPC->GetVelocity().IsNearlyZero()) {
 				return;
 			}
 		}
-		else if (CurrentSplineIndex == NPC->SplineComp->PathToFollow->SplineComponent->GetNumberOfSplinePoints() - 1) {
-			NPC->ArrivalComp->ExecuteBehavior(NPC, Target);
+		else if (CurrentSplineIndex == SplineComp->PathToFollow->SplineComponent->GetNumberOfSplinePoints() - 1) {
+			ArrivalComp->ExecuteBehavior(NPC, Target, SteeringComp, SeekComp);
 			bIsReversing = true;
 			if (!NPC->GetVelocity().IsNearlyZero()) {
 				return;
@@ -36,5 +36,5 @@ void UTwoWay::ExecuteBehavior(ANPlayerCharacter* NPC) {
 		}
 		CurrentSplineIndex += (bIsReversing ? -1 : 1);
 	}
-	NPC->SeekComp->ExecuteBehavior(NPC, Target);
+	SeekComp->ExecuteBehavior(NPC, Target, SteeringComp);
 }

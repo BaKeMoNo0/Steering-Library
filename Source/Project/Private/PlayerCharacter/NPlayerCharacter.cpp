@@ -2,8 +2,6 @@
 
 
 #include "PlayerCharacter/NPlayerCharacter.h"
-
-#include "Components/SplineComponent.h"
 #include "Word/Component/SteeringBehavior/Arrival.h"
 #include "Word/Component/SteeringBehavior/Circuit.h"
 #include "Word/Component/SteeringBehavior/Evade.h"

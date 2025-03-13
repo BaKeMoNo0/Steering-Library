@@ -3,14 +3,15 @@
 
 #include "Word/Component/SteeringBehavior/Flee.h"
 
+#include "GameFramework/Character.h"
 #include "Word/Component/SteeringBehavior/SteeringComponent.h"
 
 
-void UFlee::ExecuteBehavior(ANPlayerCharacter* NPC, FVector TargetLocation) {
+void UFlee::ExecuteBehavior(ACharacter* NPC, FVector TargetLocation, USteeringComponent* SteeringComp) {
 	if (!NPC) return;
 
 	FVector CurrentPosition = NPC->GetActorLocation();
 	FVector DesiredVelocity = (CurrentPosition - TargetLocation).GetSafeNormal() * MaxSpeed;
-	FVector Steering = NPC->SteeringComp->CalculateSteeringForce(NPC, DesiredVelocity);
-	NPC->SteeringComp->MoveWithSteering(NPC, Steering);
+	FVector Steering = SteeringComp->CalculateSteeringForce(NPC, DesiredVelocity);
+	SteeringComp->MoveWithSteering(NPC, Steering);
 }

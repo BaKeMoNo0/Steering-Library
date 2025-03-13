@@ -40,28 +40,28 @@ void UNPCBehaviorManager::ExecuteCurrentBehavior(FVector TargetLocation) {
 		OwnerCharacter->AddMovementInput(OwnerCharacter->GetActorForwardVector(), 1.0f);
 		break;
 	case Seek:
-		OwnerCharacter->SeekComp->ExecuteBehavior(OwnerCharacter, TargetLocation);
+		OwnerCharacter->SeekComp->ExecuteBehavior(OwnerCharacter, TargetLocation, OwnerCharacter->SteeringComp);
 		break;
 	case Flee:
-		OwnerCharacter->FleeComp->ExecuteBehavior(OwnerCharacter, TargetLocation);
+		OwnerCharacter->FleeComp->ExecuteBehavior(OwnerCharacter, TargetLocation, OwnerCharacter->SteeringComp);
 		break;
 	case Pursuit:
-		OwnerCharacter->PursuitComp->ExecuteBehavior(OwnerCharacter, TargetLocation, PlayerRef);
+		OwnerCharacter->PursuitComp->ExecuteBehavior(OwnerCharacter, TargetLocation, PlayerRef, OwnerCharacter->SeekComp, OwnerCharacter->SteeringComp);
 		break;
 	case Evade:
-		OwnerCharacter->EvadeComp->ExecuteBehavior(OwnerCharacter, TargetLocation, PlayerRef);
+		OwnerCharacter->EvadeComp->ExecuteBehavior(OwnerCharacter, TargetLocation, PlayerRef, OwnerCharacter->FleeComp, OwnerCharacter->SteeringComp);
 		break;
 	case Arrival:
-		OwnerCharacter->ArrivalComp->ExecuteBehavior(OwnerCharacter, TargetLocation);
+		OwnerCharacter->ArrivalComp->ExecuteBehavior(OwnerCharacter, TargetLocation, OwnerCharacter->SteeringComp, OwnerCharacter->SeekComp);
 		break;
 	case Circuit:
-		OwnerCharacter->CircuitComp->ExecuteBehavior(OwnerCharacter);
+		OwnerCharacter->CircuitComp->ExecuteBehavior(OwnerCharacter, OwnerCharacter->SeekComp, OwnerCharacter->SplineComp, OwnerCharacter->SteeringComp);
 		break;
 	case OneWay:
-		OwnerCharacter->OneWayComp->ExecuteBehavior(OwnerCharacter);
+		OwnerCharacter->OneWayComp->ExecuteBehavior(OwnerCharacter, OwnerCharacter->SeekComp, OwnerCharacter->SplineComp, OwnerCharacter->SteeringComp, OwnerCharacter->ArrivalComp);
 		break;
 	case TwoWay:
-		OwnerCharacter->TwoWayComp->ExecuteBehavior(OwnerCharacter);
+		OwnerCharacter->TwoWayComp->ExecuteBehavior(OwnerCharacter, OwnerCharacter->SeekComp, OwnerCharacter->SplineComp, OwnerCharacter->SteeringComp, OwnerCharacter->ArrivalComp);
 		break;
 	default:
 		break;

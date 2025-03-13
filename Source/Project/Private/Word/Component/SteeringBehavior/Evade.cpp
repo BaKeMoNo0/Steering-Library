@@ -3,11 +3,12 @@
 
 #include "Word/Component/SteeringBehavior/Evade.h"
 
+#include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Word/Component/SteeringBehavior/Flee.h"
 
 
-void UEvade::ExecuteBehavior(ANPlayerCharacter* NPC, FVector TargetLocation, APlayerCharacter* Player) {
+void UEvade::ExecuteBehavior(ACharacter* NPC, FVector TargetLocation, ACharacter* Player, UFlee* FleeComp, USteeringComponent* SteeringComp) {
 	FVector CurrentPosition = NPC->GetActorLocation();
 	FVector TargetVelocity = Player->GetVelocity();
 	float DistanceToTarget = FVector::Dist(CurrentPosition, TargetLocation);
@@ -22,5 +23,5 @@ void UEvade::ExecuteBehavior(ANPlayerCharacter* NPC, FVector TargetLocation, APl
 	PredictionTime = FMath::Clamp(PredictionTime, 0.1f, 2.5f);
 	FVector PredictedTarget = TargetLocation + TargetVelocity * PredictionTime;
 
-	NPC->FleeComp->ExecuteBehavior(NPC, PredictedTarget);
+	FleeComp->ExecuteBehavior(NPC, PredictedTarget, SteeringComp);
 }

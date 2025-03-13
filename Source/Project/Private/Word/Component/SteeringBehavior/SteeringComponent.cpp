@@ -3,9 +3,10 @@
 
 #include "Word/Component/SteeringBehavior/SteeringComponent.h"
 
+#include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
-FVector USteeringComponent::CalculateSteeringForce(ANPlayerCharacter* NPC, const FVector& DesiredVelocity) {
+FVector USteeringComponent::CalculateSteeringForce(ACharacter* NPC, const FVector& DesiredVelocity) {
 	if (Velocity == FVector::ZeroVector) Velocity = NPC->GetCharacterMovement()->Velocity;
 	FVector CurrentVelocity = Velocity;
 	FVector Steering = DesiredVelocity - CurrentVelocity;
@@ -13,7 +14,7 @@ FVector USteeringComponent::CalculateSteeringForce(ANPlayerCharacter* NPC, const
 }
 
 
-void USteeringComponent::MoveWithSteering(ANPlayerCharacter* NPC, const FVector& Steering) {
+void USteeringComponent::MoveWithSteering(ACharacter* NPC, const FVector& Steering) {
 	FVector Acceleration = Steering / Mass;
 	FVector NewVelocity = Velocity + Acceleration;
 	NewVelocity = NewVelocity.GetClampedToMaxSize(MaxSpeed);

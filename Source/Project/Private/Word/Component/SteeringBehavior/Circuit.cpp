@@ -6,21 +6,18 @@
 #include "Word/Component/SteeringBehavior/SplineNavigationComponent.h"
 
 
-void UCircuit::ExecuteBehavior(ANPlayerCharacter* NPC) {
-	if (!NPC->SplineComp || !NPC->SplineComp->PathToFollow) return;
+void UCircuit::ExecuteBehavior(ACharacter* NPC, USeek* SeekComp, USplineNavigationComponent* SplineComp, USteeringComponent* SteeringComp) {
+	if (!SplineComp || !SplineComp->PathToFollow) return;
 
 	if (CurrentSplineIndex < 0) {
-		CurrentSplineIndex = NPC->SplineComp->NearestSplinePoint(NPC);
+		CurrentSplineIndex = SplineComp->NearestSplinePoint(NPC);
 	}
 	
-	FVector NextTarget = NPC->SplineComp->GetNextTargetOnSpline(NPC, CurrentSplineIndex);
+	FVector NextTarget = SplineComp->GetNextTargetOnSpline(NPC, CurrentSplineIndex);
 	float DistanceToTarget = FVector::Dist(NPC->GetActorLocation(), NextTarget);
 
 	if (DistanceToTarget < AcceptanceRadius) {
-		CurrentSplineIndex = (CurrentSplineIndex + 1) % NPC->SplineComp->PathToFollow->SplineComponent->GetNumberOfSplinePoints();
+		CurrentSplineIndex = (CurrentSplineIndex + 1) % SplineComp->PathToFollow->SplineComponent->GetNumberOfSplinePoints();
 	}
-
-	if (NPC->SeekComp) {
-		NPC->SeekComp->ExecuteBehavior(NPC, NextTarget);
-	}
+	SeekComp->ExecuteBehavior(NPC, NextTarget, SteeringComp);
 }
