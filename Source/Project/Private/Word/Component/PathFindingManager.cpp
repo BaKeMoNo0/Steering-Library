@@ -3,20 +3,16 @@
 
 #include "Word/Component/PathFindingManager.h"
 
-UPathFindingManager::UPathFindingManager() {}
-
-
 
 void UPathFindingManager::BeginPlay() {
 	Super::BeginPlay();
 
-    if (!OwnerCharacter) OwnerCharacter = Cast<ANPCCharacter>(GetOwner());
+    OwnerCharacter = Cast<ANPCCharacter>(GetOwner());
 }
 
 
-TArray<AIntersectionPath*> UPathFindingManager::Dijkstra() {
-    AIntersectionPath* StartPath = OwnerCharacter->StartingIntersectionPath;
-    if (!StartPath || ChickensTargets.Num() == 0) return TArray<AIntersectionPath*>();
+TArray<AIntersectionPath*> UPathFindingManager::Dijkstra(AIntersectionPath* StartPath, AIntersectionPath* TargetPath) {
+    if (!StartPath || !TargetPath) return TArray<AIntersectionPath*>();
     
     // Init
     TMap<AIntersectionPath*, float> Distances;
@@ -32,9 +28,6 @@ TArray<AIntersectionPath*> UPathFindingManager::Dijkstra() {
     }
 
     Distances[StartPath] = 0.0f;
-
-    TArray<AIntersectionPath*> BestTargets;
-    float BestCost = FLT_MAX;
     
     // Start Dijkstra
     while (UnvisitedNodes.Num() > 0) {
@@ -49,25 +42,14 @@ TArray<AIntersectionPath*> UPathFindingManager::Dijkstra() {
         }
         if (!CurrentNode) break;
         UnvisitedNodes.Remove(CurrentNode);
-        
-        for (ANPCCharacter* TargetChicken : ChickensTargets) {
-            if (TargetChicken && TargetChicken->StartingIntersectionPath == CurrentNode) {
-                float TargetCost = Distances[CurrentNode];
-                if (TargetCost < BestCost) {
-                    BestCost = TargetCost;
-                    BestTargets.Empty();
-                    BestTargets.Add(CurrentNode);
-                    CurrentNode->ChickenTarget = TargetChicken;
-                }
-                else if (TargetCost == BestCost) {
-                    BestTargets.Add(CurrentNode);
-                }
-            }
-        }
 
+        if (CurrentNode == TargetPath) {
+            break;
+        }
+        
         // Update neighbor distances
         for (ASimplePath* Path : CurrentNode->ConnectedPaths) {
-            AIntersectionPath* Neighbor = Path->GetOtherIntersection(CurrentNode);  
+            AIntersectionPath* Neighbor = Path->GetOtherIntersection(CurrentNode);
             if (Neighbor) {
                 float NewDistance = Distances[CurrentNode] + Path->GetCost();
                 if (NewDistance < Distances[Neighbor]) {
@@ -77,40 +59,74 @@ TArray<AIntersectionPath*> UPathFindingManager::Dijkstra() {
             }
         }
     }
-    if (BestTargets.Num() == 0) return TArray<AIntersectionPath*>();
-
-    AIntersectionPath* FinalTarget = BestTargets[0];
-    for (AIntersectionPath* Target : BestTargets) {
-        if (Distances[Target] < Distances[FinalTarget]) {
-            FinalTarget = Target;
-        }
-    }
 
     // Rebuild the path from the best target
     TArray<AIntersectionPath*> ShortestPath;
-    AIntersectionPath* Current = FinalTarget;
-    while (Current !=  OwnerCharacter->StartingIntersectionPath) {
-        ShortestPath.Insert(Current, 0);  
+    AIntersectionPath* Current = TargetPath;
+    while (Current) {
+        if (Current == OwnerCharacter->FarmIntersection && OwnerCharacter->StartingIntersectionPath == OwnerCharacter->FarmIntersection) {
+            Current = Predecessors[Current];
+            continue;
+        }
+        ShortestPath.Insert(Current, 0);
         Current = Predecessors[Current];
     }
     return ShortestPath;
 }
 
 
-void UPathFindingManager::MoveToTarget(ANPCCharacter* NPC) {
-    if (!NPC) return;
-    TArray<AIntersectionPath*> Path = Dijkstra();
-    if (Path.Num() > 0) {
-        NPC->FollowPath(Path);
+TArray<AIntersectionPath*> UPathFindingManager::FindPathToClosestChicken() {
+    if (ChickensTargets.Num() == 0) return TArray<AIntersectionPath*>();
+
+    AIntersectionPath* StartPath = OwnerCharacter->StartingIntersectionPath;
+    if (!StartPath) return TArray<AIntersectionPath*>();
+
+    AIntersectionPath* BestTargetPath = nullptr;
+    float BestCost = FLT_MAX;
+
+    for (ANPCCharacter* Chicken : ChickensTargets) {
+        if (Chicken && Chicken->StartingIntersectionPath) {
+            TArray<AIntersectionPath*> Path = Dijkstra(StartPath, Chicken->StartingIntersectionPath);
+            float PathCost = Path.Num();
+
+            if (PathCost > 0 && PathCost < BestCost) {
+                BestCost = PathCost;
+                BestTargetPath = Chicken->StartingIntersectionPath;
+                ChickenTarget = Chicken;
+            }
+        }
+    }
+
+    if (!BestTargetPath) return TArray<AIntersectionPath*>();  
+
+    return Dijkstra(StartPath, BestTargetPath);
+}
+
+
+void UPathFindingManager::MoveToIntersection(TArray<AIntersectionPath*> Path) {
+    if (OwnerCharacter && Path.Num() > 0) {
+        OwnerCharacter->FollowPath(Path);
     }
 }
 
 
-void UPathFindingManager::RecalculatePath(ANPCCharacter* NPC) {
-    if (!NPC) return;
-    
-    TArray<AIntersectionPath*> NewPath = Dijkstra();
-    if (NewPath.Num() > 0) {
-        NPC->UpdatePath(NewPath);
+void UPathFindingManager::MoveToChickenPosition(FVector TargetPosition) {
+    if (OwnerCharacter->AIController) {
+        OwnerCharacter->bIsLastIntersection = true;
+        OwnerCharacter->AIController->MoveToTarget(TargetPosition);
     }
 }
+
+
+void UPathFindingManager::RecalculatePath() {
+    OwnerCharacter->CheckOverlappingPaths();
+    if (OwnerCharacter->StartingIntersectionPath != OwnerCharacter->FarmIntersection) {
+        TArray<AIntersectionPath*> NewPath = Dijkstra(OwnerCharacter->StartingIntersectionPath, OwnerCharacter->FarmIntersection);
+        for (AIntersectionPath* Path : NewPath)
+        {
+            UE_LOG(LogTemp, Warning, TEXT("Recalculating Path : %s"), *Path->GetPathName());
+        }
+        MoveToIntersection(NewPath);
+    }
+}
+

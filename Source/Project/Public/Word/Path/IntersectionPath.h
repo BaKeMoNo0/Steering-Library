@@ -20,8 +20,6 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, Category="Paths")
 	TArray<ASimplePath*> ConnectedPaths;
-	UPROPERTY()
-	ANPCCharacter* ChickenTarget = nullptr;
 	void GetAllNeighbors();
 	
 protected:

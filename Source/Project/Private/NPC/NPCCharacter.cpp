@@ -4,6 +4,7 @@
 #include "NPC/NPCCharacter.h"
 
 #include "Components/BoxComponent.h"
+#include "Word/Component/ChickenHandlerComponent.h"
 #include "Word/Component/PathFindingManager.h"
 #include "Word/Component/SteeringBehavior/Seek.h"
 #include "Word/Component/SteeringBehavior/SteeringComponent.h"
@@ -30,20 +31,16 @@ ANPCCharacter::ANPCCharacter() {
 void ANPCCharacter::BeginPlay() {
 	Super::BeginPlay();
 
+	AIController = Cast<ANPC_AIController>(GetController());
 	PathFindingManager = FindComponentByClass<UPathFindingManager>();
 	SeekComp = FindComponentByClass<USeek>();
 	SteeringComp = FindComponentByClass<USteeringComponent>();
-	AIController = Cast<ANPC_AIController>(GetController());
+	ChickenHandler = FindComponentByClass<UChickenHandlerComponent>();
 }
 
 
 void ANPCCharacter::CheckOverlappingPaths() {
 	if (CollisionBox) {
-		/*FVector BoxExtent = CollisionBox->GetScaledBoxExtent();
-		FVector BoxCenter = CollisionBox->GetComponentLocation();
-
-		DrawDebugBox(GetWorld(), BoxCenter, BoxExtent, FColor::Yellow, true, 10.0f);*/
-		
 		TArray<AActor*> OverlappingActors;
 		CollisionBox->GetOverlappingActors(OverlappingActors);
         
@@ -65,18 +62,19 @@ void ANPCCharacter::FollowPath(const TArray<AIntersectionPath*>& Path) {
     
 	CurrentPathIndex = 0;
 	CurrentPath = Path;
+	bIsLastIntersection = false;
 
 	MoveToNextPoint();
 }
 
 
 void ANPCCharacter::MoveToNextPoint() {
-	if (CurrentPathIndex > CurrentPath.Num()) return;
+	if (CurrentPathIndex >= CurrentPath.Num()) return;
 
 	AIntersectionPath* NextPoint = CurrentPath[CurrentPathIndex];
 	if (!NextPoint) return;
+	
 	if (AIController) {
-		bIsMoving = true;
 		FVector Location = FVector(NextPoint->GetActorLocation().X, NextPoint->GetActorLocation().Y, 140.0f);
 		AIController->MoveToTarget(Location);
 	}
@@ -85,30 +83,13 @@ void ANPCCharacter::MoveToNextPoint() {
 
 void ANPCCharacter::OnReachDestination() {
 	CurrentPathIndex++;
-
+	
 	if (CurrentPathIndex < CurrentPath.Num()) {
 		MoveToNextPoint();
 	} 
-	else if (CurrentPathIndex == CurrentPath.Num()){
-		AIntersectionPath* TargetPath = CurrentPath.Last();
-		if (TargetPath && TargetPath->ChickenTarget) {
-			FVector Location = FVector(TargetPath->ChickenTarget->GetActorLocation().X - 100, TargetPath->ChickenTarget->GetActorLocation().Y, TargetPath->ChickenTarget->GetActorLocation().Z);
-			MoveToTarget(Location);
+	else if (CurrentPathIndex == CurrentPath.Num()) {
+		if (PathFindingManager->ChickenTarget) {
+			PathFindingManager->MoveToChickenPosition(PathFindingManager->ChickenTarget->GetActorLocation());
 		}
-	} else {
-		bIsMoving = false;
-	}
-}
-
-
-void ANPCCharacter::UpdatePath(const TArray<AIntersectionPath*>& NewPath) {
-	if (NewPath.Num() == 0) return;
-    
-	FollowPath(NewPath);
-}
-
-void ANPCCharacter::MoveToTarget(FVector TargetPosition) {
-	if (AIController) {
-		AIController->MoveToTarget(TargetPosition);
 	}
 }

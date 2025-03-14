@@ -15,9 +15,9 @@ class PROJECT_API AGameModeLab2 : public AGameModeBase {
 	GENERATED_BODY()
 
 	UPROPERTY()
-	AIntersectionPath* IntersectionPath;
-	UPROPERTY()
 	ASpawnManager* SpawnManager;
+	UPROPERTY()
+	AIntersectionPath* FarmIntersection;
 	
 	void InitAllIntersectionPath();
 	void InitSimplePath();

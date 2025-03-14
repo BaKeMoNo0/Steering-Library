@@ -13,12 +13,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17109111-de2b-402c-a23b-2e9c5efacfb7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Game/Character/Blueprints/Lab2/NPC/BP_NPCFarmer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Game/Character/Blueprints/Lab2/NPC/BP_NPCFarmer.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Game/Level/Lab2.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Game/Level/Lab2.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Game/Word/Mesh/MiniPickUp/SKM_MiniPickUp.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Game/Word/Mesh/MiniPickUp/SKM_MiniPickUp.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Game/Word/Mesh/MiniPickUp/SK_MiniPickUp.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Game/Word/Mesh/MiniPickUp/SK_MiniPickUp.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Game/Word/Mesh/MiniPickUp/SM_MiniPickUp.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Game/Word/Mesh/MiniPickUp/SM_MiniPickUp.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Project/Private/GameModeLab2.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Private/GameModeLab2.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Project/Private/NPC/NPCCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Private/NPC/NPCCharacter.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Project/Private/NPC/NPC_AIController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Private/NPC/NPC_AIController.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Project/Private/Word/Component/PathFindingManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Private/Word/Component/PathFindingManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Project/Public/GameModeLab2.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Public/GameModeLab2.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Project/Public/NPC/NPCCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Public/NPC/NPCCharacter.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Project/Public/NPC/NPC_AIController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Public/NPC/NPC_AIController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Project/Public/Word/Component/PathFindingManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Public/Word/Component/PathFindingManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Project/Public/Word/Path/IntersectionPath.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Public/Word/Path/IntersectionPath.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -254,6 +262,7 @@
       <workItem from="1741782856016" duration="5387000" />
       <workItem from="1741791485513" duration="30483000" />
       <workItem from="1741853854737" duration="18447000" />
+      <workItem from="1741879157761" duration="19884000" />
     </task>
     <servers />
   </component>

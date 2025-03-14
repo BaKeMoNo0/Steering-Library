@@ -18,5 +18,5 @@ public:
 	FVector Velocity = FVector::ZeroVector;
 	float MaxSpeed = 400.0f;
 	float MaxForce = 200.0f;
-	float Mass = 40.0f;
+	float Mass = 20.0f;
 };

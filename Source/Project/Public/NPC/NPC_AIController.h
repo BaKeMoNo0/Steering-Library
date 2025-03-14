@@ -18,8 +18,11 @@ class PROJECT_API ANPC_AIController : public AAIController {
 	FVector CurrentTargetLocation;
 	UPROPERTY()
 	ANPCCharacter* OwnerCharacter;
-
+	void CheckDistanceToTarget();
+	
 public:
+	FTimerHandle DistanceCheckTimer;
+	
     virtual void BeginPlay() override;
 	virtual void OnPossess(APawn* InPawn) override;
 	virtual void Tick(float DeltaTime) override;

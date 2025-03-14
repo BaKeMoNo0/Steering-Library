@@ -13,22 +13,24 @@ UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PROJECT_API UPathFindingManager : public UActorComponent {
 	GENERATED_BODY()
 	
-	TArray<AIntersectionPath*> Dijkstra();
+	TArray<AIntersectionPath*> Dijkstra(AIntersectionPath* StartPath, AIntersectionPath* TargetPath);
 
 protected:
 	virtual void BeginPlay() override;
 	
 public:
-	UPathFindingManager();
-
 	UPROPERTY()
 	TArray<AIntersectionPath*> AllIntersections;
 	UPROPERTY()
 	TArray<ANPCCharacter*> ChickensTargets;
 	UPROPERTY()
 	ANPCCharacter* OwnerCharacter;
+	UPROPERTY()
+	ANPCCharacter* ChickenTarget;
 
-	void MoveToTarget(ANPCCharacter* NPC);
-	void RecalculatePath(ANPCCharacter* NPC);
+	void MoveToIntersection(TArray<AIntersectionPath*> Path );
+	void RecalculatePath();
+	void MoveToChickenPosition(FVector TargetPosition);
+	TArray<AIntersectionPath*> FindPathToClosestChicken();
 	
 };

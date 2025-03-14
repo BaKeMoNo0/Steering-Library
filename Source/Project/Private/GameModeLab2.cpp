@@ -4,6 +4,7 @@
 #include "GameModeLab2.h"
 
 #include "Kismet/GameplayStatics.h"
+#include "Word/Component/ChickenHandlerComponent.h"
 #include "Word/Component/PathFindingManager.h"
 #include "Word/Path/IntersectionPath.h"
 #include "Word/Spawn/SpawnManager.h"
@@ -23,6 +24,9 @@ void AGameModeLab2::InitAllIntersectionPath() {
 		if (AIntersectionPath* Intersection = Cast<AIntersectionPath>(Actor)) {
 			Intersection->GetAllNeighbors();
 			AllIntersections.Add(Intersection);
+			if (Intersection->ActorHasTag("Farm")){
+				FarmIntersection = Intersection;
+			}
 		}
 	}
 }
@@ -54,12 +58,14 @@ void AGameModeLab2::InitNcpCharacter() {
 	}
 	for (ANPCCharacter * Farmer : SpawnManager->SpawnedFarmers){
 		Farmer->CheckOverlappingPaths();
+		Farmer->FarmIntersection = FarmIntersection;
 		if (Farmer->PathFindingManager) {
 			Farmer->PathFindingManager->AllIntersections = AllIntersections;
 			Farmer->PathFindingManager->ChickensTargets = SpawnManager->SpawnedChickens;
 		}
 		if (Farmer->StartingIntersectionPath && Farmer->PathFindingManager) {
-			Farmer->PathFindingManager->MoveToTarget(Farmer);
+			TArray<AIntersectionPath*> Path = Farmer->PathFindingManager->FindPathToClosestChicken();
+			Farmer->PathFindingManager->MoveToIntersection(Path);
 		}
 	}
 }

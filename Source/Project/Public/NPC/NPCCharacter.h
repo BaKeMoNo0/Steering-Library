@@ -8,6 +8,7 @@
 #include "Word/Path/SimplePath.h"
 #include "NPCCharacter.generated.h"
 
+class UChickenHandlerComponent;
 class UPathFindingManager;
 
 UCLASS()
@@ -21,30 +22,32 @@ class PROJECT_API ANPCCharacter : public ACharacter {
 
 public:
 	ANPCCharacter();
-	
-	UPROPERTY()
-	UPathFindingManager* PathFindingManager;
 	UPROPERTY()
 	USeek* SeekComp;
 	UPROPERTY()
+	ANPC_AIController* AIController;
+	UPROPERTY()
 	USteeringComponent* SteeringComp;
 	UPROPERTY()
-	ANPC_AIController* AIController;
+	UPathFindingManager* PathFindingManager;
+	UPROPERTY()
+	UChickenHandlerComponent* ChickenHandler;
 	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Pathfinding")
+	AIntersectionPath* FarmIntersection;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Pathfinding")
 	AIntersectionPath* StartingIntersectionPath;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Pathfinding")
 	ASimplePath* StartingSimplePath;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Pathfinding")
 	TArray<AIntersectionPath*> CurrentPath;
-	bool bIsMoving = false;
+	
+	bool bIsLastIntersection = false;
 	
 	void CheckOverlappingPaths();
 	void FollowPath(const TArray<AIntersectionPath*>& Path);
 	void MoveToNextPoint();
 	void OnReachDestination();
-	void UpdatePath(const TArray<AIntersectionPath*>& NewPath);
-	void MoveToTarget(FVector TargetPosition);
 protected:
 	virtual void BeginPlay() override;
 };
