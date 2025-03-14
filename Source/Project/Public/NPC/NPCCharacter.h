@@ -43,6 +43,7 @@ public:
 	TArray<AIntersectionPath*> CurrentPath;
 	
 	bool bIsLastIntersection = false;
+	bool bHasChicken = false;
 	
 	void CheckOverlappingPaths();
 	void FollowPath(const TArray<AIntersectionPath*>& Path);

@@ -122,10 +122,6 @@ void UPathFindingManager::RecalculatePath() {
     OwnerCharacter->CheckOverlappingPaths();
     if (OwnerCharacter->StartingIntersectionPath != OwnerCharacter->FarmIntersection) {
         TArray<AIntersectionPath*> NewPath = Dijkstra(OwnerCharacter->StartingIntersectionPath, OwnerCharacter->FarmIntersection);
-        for (AIntersectionPath* Path : NewPath)
-        {
-            UE_LOG(LogTemp, Warning, TEXT("Recalculating Path : %s"), *Path->GetPathName());
-        }
         MoveToIntersection(NewPath);
     }
 }
