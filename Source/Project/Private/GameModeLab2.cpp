@@ -64,8 +64,9 @@ void AGameModeLab2::InitNcpCharacter() {
 			Farmer->PathFindingManager->ChickensTargets = SpawnManager->SpawnedChickens;
 		}
 		if (Farmer->StartingIntersectionPath && Farmer->PathFindingManager) {
-			TArray<AIntersectionPath*> Path = Farmer->PathFindingManager->FindPathToClosestChicken();
-			Farmer->PathFindingManager->MoveToIntersection(Path);
+			Farmer->PathFindingManager->CalculatePath();
+			//TArray<AIntersectionPath*> Path = Farmer->PathFindingManager->FindPathToClosestChicken();
+			//Farmer->PathFindingManager->MoveToIntersection(Path);
 		}
 	}
 }

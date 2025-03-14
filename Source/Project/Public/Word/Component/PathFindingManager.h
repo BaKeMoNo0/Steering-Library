@@ -28,8 +28,8 @@ public:
 	UPROPERTY()
 	ANPCCharacter* ChickenTarget;
 
-	void MoveToIntersection(TArray<AIntersectionPath*> Path );
-	void RecalculatePath();
+	void MoveToIntersection(TArray<AIntersectionPath*> Path);
+	void CalculatePath();
 	void MoveToChickenPosition(FVector TargetPosition);
 	TArray<AIntersectionPath*> FindPathToClosestChicken();
 	

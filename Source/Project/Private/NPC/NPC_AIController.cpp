@@ -38,13 +38,14 @@ void ANPC_AIController::MoveToTarget(FVector TargetLocation) {
 void ANPC_AIController::CheckDistanceToTarget() {
 	if (OwnerCharacter && !CurrentTargetLocation.IsNearlyZero()) {
 		float Distance = FVector::Dist(OwnerCharacter->GetActorLocation(), CurrentTargetLocation);
-		if (Distance < 400.0f) { 
+		if (Distance < 350.0f) { 
 			if (OwnerCharacter->bIsLastIntersection && OwnerCharacter->bHasChicken) {
 				OwnerCharacter->ChickenHandler->DropChicken(OwnerCharacter->PathFindingManager->ChickenTarget);
+				OwnerCharacter->PathFindingManager->CalculatePath();
 			}
 			else if (OwnerCharacter->bIsLastIntersection && !OwnerCharacter->bHasChicken) {
 				OwnerCharacter->ChickenHandler->PickupChicken(OwnerCharacter->PathFindingManager->ChickenTarget);
-				OwnerCharacter->PathFindingManager->RecalculatePath();
+				OwnerCharacter->PathFindingManager->CalculatePath();
 			}
 			else {
 				OwnerCharacter->OnReachDestination();

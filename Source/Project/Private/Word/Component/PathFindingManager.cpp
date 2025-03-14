@@ -118,11 +118,14 @@ void UPathFindingManager::MoveToChickenPosition(FVector TargetPosition) {
 }
 
 
-void UPathFindingManager::RecalculatePath() {
+void UPathFindingManager::CalculatePath() {
     OwnerCharacter->CheckOverlappingPaths();
     if (OwnerCharacter->StartingIntersectionPath != OwnerCharacter->FarmIntersection) {
         TArray<AIntersectionPath*> NewPath = Dijkstra(OwnerCharacter->StartingIntersectionPath, OwnerCharacter->FarmIntersection);
         MoveToIntersection(NewPath);
+    } else {
+        TArray<AIntersectionPath*> Path = OwnerCharacter->PathFindingManager->FindPathToClosestChicken();
+        OwnerCharacter->PathFindingManager->MoveToIntersection(Path);
     }
 }
 
