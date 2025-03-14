@@ -8,6 +8,7 @@
 #include "Word/Path/SimplePath.h"
 #include "NPCCharacter.generated.h"
 
+class UArrival;
 class UChickenHandlerComponent;
 class UPathFindingManager;
 
@@ -25,6 +26,8 @@ public:
 	UPROPERTY()
 	USeek* SeekComp;
 	UPROPERTY()
+	UArrival* ArrivalComp;
+	UPROPERTY()
 	ANPC_AIController* AIController;
 	UPROPERTY()
 	USteeringComponent* SteeringComp;
@@ -32,6 +35,8 @@ public:
 	UPathFindingManager* PathFindingManager;
 	UPROPERTY()
 	UChickenHandlerComponent* ChickenHandler;
+	UPROPERTY()
+	AActor* ParkingSpot;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Pathfinding")
 	AIntersectionPath* FarmIntersection;
@@ -44,6 +49,7 @@ public:
 	
 	bool bIsLastIntersection = false;
 	bool bHasChicken = false;
+	bool bGoParking = false;
 	
 	void CheckOverlappingPaths();
 	void FollowPath(const TArray<AIntersectionPath*>& Path);

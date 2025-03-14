@@ -6,6 +6,7 @@
 #include "Components/BoxComponent.h"
 #include "Word/Component/ChickenHandlerComponent.h"
 #include "Word/Component/PathFindingManager.h"
+#include "Word/Component/SteeringBehavior/Arrival.h"
 #include "Word/Component/SteeringBehavior/Seek.h"
 #include "Word/Component/SteeringBehavior/SteeringComponent.h"
 #include "Word/Path/IntersectionPath.h"
@@ -36,6 +37,7 @@ void ANPCCharacter::BeginPlay() {
 	SeekComp = FindComponentByClass<USeek>();
 	SteeringComp = FindComponentByClass<USteeringComponent>();
 	ChickenHandler = FindComponentByClass<UChickenHandlerComponent>();
+	ArrivalComp = FindComponentByClass<UArrival>();
 }
 
 
@@ -87,9 +89,7 @@ void ANPCCharacter::OnReachDestination() {
 	if (CurrentPathIndex < CurrentPath.Num()) {
 		MoveToNextPoint();
 	} 
-	else if (CurrentPathIndex == CurrentPath.Num()) {
-		if (PathFindingManager->ChickenTarget) {
-			PathFindingManager->MoveToChickenPosition(PathFindingManager->ChickenTarget->GetActorLocation());
-		}
+	else if (CurrentPathIndex == CurrentPath.Num() && PathFindingManager->ChickenTarget) {
+		PathFindingManager->MoveToPosition(PathFindingManager->ChickenTarget->GetActorLocation());
 	}
 }

@@ -24,13 +24,15 @@ public:
 	UPROPERTY()
 	TArray<ANPCCharacter*> ChickensTargets;
 	UPROPERTY()
+	TArray<ANPCCharacter*> Farmers;
+	UPROPERTY()
 	ANPCCharacter* OwnerCharacter;
 	UPROPERTY()
 	ANPCCharacter* ChickenTarget;
 
 	void MoveToIntersection(TArray<AIntersectionPath*> Path);
 	void CalculatePath();
-	void MoveToChickenPosition(FVector TargetPosition);
+	void MoveToPosition(FVector TargetPosition);
 	TArray<AIntersectionPath*> FindPathToClosestChicken();
 	
 };

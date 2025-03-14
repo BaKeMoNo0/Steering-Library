@@ -13,8 +13,6 @@ class PROJECT_API UChickenHandlerComponent : public UActorComponent {
 	GENERATED_BODY()
 
 public:
-	UChickenHandlerComponent();
-	
 	UPROPERTY()
 	ANPCCharacter* OwnerCharacter;
 	UPROPERTY(EditAnywhere)

@@ -8,9 +8,6 @@
 #include "Word/Component/PathFindingManager.h"
 
 
-UChickenHandlerComponent::UChickenHandlerComponent(){}
-
-
 void UChickenHandlerComponent::BeginPlay() {
 	Super::BeginPlay();
 	OwnerCharacter = Cast<ANPCCharacter>(GetOwner());
@@ -49,7 +46,6 @@ void UChickenHandlerComponent::DropChicken(ANPCCharacter* CarriedChicken) {
 	CarriedChicken->SetActorLocation(RandomLocation);
 	CarriedChicken->SetActorEnableCollision(true);
 	CarriedChicken->GetMesh()->SetSimulatePhysics(true);
-	CarriedChicken = nullptr;
-	OwnerCharacter->PathFindingManager->ChickenTarget = nullptr;
 	OwnerCharacter->bHasChicken = false;
+	OwnerCharacter->PathFindingManager->ChickenTarget = nullptr;
 }

@@ -4,7 +4,6 @@
 #include "GameModeLab2.h"
 
 #include "Kismet/GameplayStatics.h"
-#include "Word/Component/ChickenHandlerComponent.h"
 #include "Word/Component/PathFindingManager.h"
 #include "Word/Path/IntersectionPath.h"
 #include "Word/Spawn/SpawnManager.h"
@@ -15,6 +14,8 @@ void AGameModeLab2::BeginPlay() {
 	InitSimplePath();
 	SpawnManagerSetup();
 	InitNcpCharacter();
+	InitParkingSpots();
+	StartPathFinding();
 }
 
 void AGameModeLab2::InitAllIntersectionPath() {
@@ -62,11 +63,26 @@ void AGameModeLab2::InitNcpCharacter() {
 		if (Farmer->PathFindingManager) {
 			Farmer->PathFindingManager->AllIntersections = AllIntersections;
 			Farmer->PathFindingManager->ChickensTargets = SpawnManager->SpawnedChickens;
+			Farmer->PathFindingManager->Farmers = SpawnManager->SpawnedFarmers;
 		}
-		if (Farmer->StartingIntersectionPath && Farmer->PathFindingManager) {
+	}
+}
+
+void AGameModeLab2::InitParkingSpots() {
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ParkingSpotPointClass, ParkingSpotsPoints);
+	int32 SpotIndex = 0;
+	for (ANPCCharacter* Farmer : SpawnManager->SpawnedFarmers) {
+		if (!Farmer || SpotIndex >= ParkingSpotsPoints.Num()) break;
+
+		Farmer->ParkingSpot = ParkingSpotsPoints[SpotIndex];
+		SpotIndex++;
+	}
+}
+
+void AGameModeLab2::StartPathFinding() {
+	for (ANPCCharacter* Farmer : SpawnManager->SpawnedFarmers){
+		if (Farmer->StartingIntersectionPath) {
 			Farmer->PathFindingManager->CalculatePath();
-			//TArray<AIntersectionPath*> Path = Farmer->PathFindingManager->FindPathToClosestChicken();
-			//Farmer->PathFindingManager->MoveToIntersection(Path);
 		}
 	}
 }

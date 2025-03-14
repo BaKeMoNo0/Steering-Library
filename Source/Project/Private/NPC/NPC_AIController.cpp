@@ -29,21 +29,35 @@ void ANPC_AIController::Tick(float DeltaTime) {
 
 void ANPC_AIController::MoveToTarget(FVector TargetLocation) {
 	CurrentTargetLocation = TargetLocation;
-	if (OwnerCharacter->SeekComp && OwnerCharacter->SteeringComp) {
+	if (!OwnerCharacter->bGoParking && OwnerCharacter->SeekComp && OwnerCharacter->SteeringComp) {
 		OwnerCharacter->SeekComp->ExecuteBehavior(OwnerCharacter, TargetLocation, OwnerCharacter->SteeringComp);
+	} else {
+		OwnerCharacter->ArrivalComp->ExecuteBehavior(OwnerCharacter, TargetLocation, OwnerCharacter->SteeringComp, OwnerCharacter->SeekComp);
 	}
 }
 
 
 void ANPC_AIController::CheckDistanceToTarget() {
 	if (OwnerCharacter && !CurrentTargetLocation.IsNearlyZero()) {
+		UE_LOG(LogTemp, Warning, TEXT("yes"));
+		for (ANPCCharacter* OtherRescuer : OwnerCharacter->PathFindingManager->Farmers) {
+			if (OtherRescuer != OwnerCharacter && FVector::Dist(OwnerCharacter->GetActorLocation(), OtherRescuer->GetActorLocation()) < 50.f) {
+				FVector AvoidanceVector = OwnerCharacter->GetActorLocation() - OtherRescuer->GetActorLocation();
+				AvoidanceVector.Normalize();
+				OwnerCharacter->AddMovementInput(AvoidanceVector * 100.0f);
+			}
+		}
+		
 		float Distance = FVector::Dist(OwnerCharacter->GetActorLocation(), CurrentTargetLocation);
-		if (Distance < 350.0f) { 
+		if (OwnerCharacter->bGoParking || Distance < 100.f) {
+			GetWorldTimerManager().ClearTimer(DistanceCheckTimer);
+		}
+		if (Distance < 400.0f) {
 			if (OwnerCharacter->bIsLastIntersection && OwnerCharacter->bHasChicken) {
 				OwnerCharacter->ChickenHandler->DropChicken(OwnerCharacter->PathFindingManager->ChickenTarget);
 				OwnerCharacter->PathFindingManager->CalculatePath();
 			}
-			else if (OwnerCharacter->bIsLastIntersection && !OwnerCharacter->bHasChicken) {
+			else if (OwnerCharacter->bIsLastIntersection && !OwnerCharacter->bHasChicken && OwnerCharacter->PathFindingManager->ChickenTarget) {
 				OwnerCharacter->ChickenHandler->PickupChicken(OwnerCharacter->PathFindingManager->ChickenTarget);
 				OwnerCharacter->PathFindingManager->CalculatePath();
 			}

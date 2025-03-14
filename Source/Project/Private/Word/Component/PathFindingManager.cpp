@@ -110,7 +110,7 @@ void UPathFindingManager::MoveToIntersection(TArray<AIntersectionPath*> Path) {
 }
 
 
-void UPathFindingManager::MoveToChickenPosition(FVector TargetPosition) {
+void UPathFindingManager::MoveToPosition(FVector TargetPosition) {
     if (OwnerCharacter->AIController) {
         OwnerCharacter->bIsLastIntersection = true;
         OwnerCharacter->AIController->MoveToTarget(TargetPosition);
@@ -125,7 +125,12 @@ void UPathFindingManager::CalculatePath() {
         MoveToIntersection(NewPath);
     } else {
         TArray<AIntersectionPath*> Path = OwnerCharacter->PathFindingManager->FindPathToClosestChicken();
-        OwnerCharacter->PathFindingManager->MoveToIntersection(Path);
+        if (Path.Num() > 0) {
+            OwnerCharacter->PathFindingManager->MoveToIntersection(Path);
+        } else {
+            OwnerCharacter->bGoParking = true;
+            MoveToPosition(OwnerCharacter->ParkingSpot->GetActorLocation());
+        }
     }
 }
 

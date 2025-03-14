@@ -18,11 +18,17 @@ class PROJECT_API AGameModeLab2 : public AGameModeBase {
 	ASpawnManager* SpawnManager;
 	UPROPERTY()
 	AIntersectionPath* FarmIntersection;
+	UPROPERTY()
+	TArray<AActor*> ParkingSpotsPoints;
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AActor> ParkingSpotPointClass;
 	
 	void InitAllIntersectionPath();
 	void InitSimplePath();
 	void SpawnManagerSetup();
 	void InitNcpCharacter();
+	void InitParkingSpots();
+	void StartPathFinding();
 
 protected:
 	virtual void BeginPlay() override;
