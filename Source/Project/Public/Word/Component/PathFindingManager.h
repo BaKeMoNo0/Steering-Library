@@ -22,8 +22,6 @@ public:
 	UPROPERTY()
 	TArray<AIntersectionPath*> AllIntersections;
 	UPROPERTY()
-	TArray<ANPCCharacter*> ChickensTargets;
-	UPROPERTY()
 	TArray<ANPCCharacter*> Farmers;
 	UPROPERTY()
 	ANPCCharacter* OwnerCharacter;

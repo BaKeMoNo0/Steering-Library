@@ -3,6 +3,7 @@
 
 #include "NPC/NPCCharacter.h"
 
+#include "GameModeLab2.h"
 #include "Components/BoxComponent.h"
 #include "Word/Component/ChickenHandlerComponent.h"
 #include "Word/Component/PathFindingManager.h"
@@ -38,6 +39,8 @@ void ANPCCharacter::BeginPlay() {
 	SteeringComp = FindComponentByClass<USteeringComponent>();
 	ChickenHandler = FindComponentByClass<UChickenHandlerComponent>();
 	ArrivalComp = FindComponentByClass<UArrival>();
+	//PlannerComp = FindComponentByClass<UPlannerComponent>();
+	GameModeLab2 = Cast<AGameModeLab2>(GetWorld()->GetAuthGameMode());
 }
 
 

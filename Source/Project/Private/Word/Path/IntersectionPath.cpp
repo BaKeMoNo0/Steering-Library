@@ -18,7 +18,7 @@ void AIntersectionPath::GetAllNeighbors() {
 	GetComponents<UBoxComponent>(BoxComponents);
 
 	for (UBoxComponent* BoxComp : BoxComponents) {
-		if (BoxComp) {
+		if (BoxComp && BoxComp->ComponentHasTag(FName("Path"))) {
 			TArray<AActor*> OverlappingActors;
 			BoxComp->GetOverlappingActors(OverlappingActors);
 			if (OverlappingActors.Num() > 0){

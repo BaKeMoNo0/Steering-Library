@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "NPC/NPCCharacter.h"
 #include "GameModeLab2.generated.h"
 
 
@@ -35,5 +36,7 @@ protected:
 
 public:
 	UPROPERTY()
-	TArray<AIntersectionPath*> AllIntersections;	
+	TArray<AIntersectionPath*> AllIntersections;
+	UPROPERTY()
+	TArray<ANPCCharacter*> ChickensTargets;
 };

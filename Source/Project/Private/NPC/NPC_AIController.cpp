@@ -39,7 +39,6 @@ void ANPC_AIController::MoveToTarget(FVector TargetLocation) {
 
 void ANPC_AIController::CheckDistanceToTarget() {
 	if (OwnerCharacter && !CurrentTargetLocation.IsNearlyZero()) {
-		UE_LOG(LogTemp, Warning, TEXT("yes"));
 		for (ANPCCharacter* OtherRescuer : OwnerCharacter->PathFindingManager->Farmers) {
 			if (OtherRescuer != OwnerCharacter && FVector::Dist(OwnerCharacter->GetActorLocation(), OtherRescuer->GetActorLocation()) < 50.f) {
 				FVector AvoidanceVector = OwnerCharacter->GetActorLocation() - OtherRescuer->GetActorLocation();

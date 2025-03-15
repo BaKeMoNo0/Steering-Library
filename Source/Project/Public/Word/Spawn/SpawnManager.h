@@ -39,6 +39,6 @@ protected:
 	int32 NumberOfChickenToSpawn = 3;
 
 	UPROPERTY(EditAnywhere, Category="Spawn")
-	int32 NumberOfFarmerToSpawn = 1;
+	int32 NumberOfFarmerToSpawn = 2;
 	
 };

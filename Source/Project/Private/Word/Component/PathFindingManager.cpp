@@ -3,6 +3,8 @@
 
 #include "Word/Component/PathFindingManager.h"
 
+#include "GameModeLab2.h"
+
 
 void UPathFindingManager::BeginPlay() {
 	Super::BeginPlay();
@@ -76,7 +78,7 @@ TArray<AIntersectionPath*> UPathFindingManager::Dijkstra(AIntersectionPath* Star
 
 
 TArray<AIntersectionPath*> UPathFindingManager::FindPathToClosestChicken() {
-    if (ChickensTargets.Num() == 0) return TArray<AIntersectionPath*>();
+    if (OwnerCharacter->GameModeLab2->ChickensTargets.Num() == 0) return TArray<AIntersectionPath*>();
 
     AIntersectionPath* StartPath = OwnerCharacter->StartingIntersectionPath;
     if (!StartPath) return TArray<AIntersectionPath*>();
@@ -84,7 +86,7 @@ TArray<AIntersectionPath*> UPathFindingManager::FindPathToClosestChicken() {
     AIntersectionPath* BestTargetPath = nullptr;
     float BestCost = FLT_MAX;
 
-    for (ANPCCharacter* Chicken : ChickensTargets) {
+    for (ANPCCharacter* Chicken : OwnerCharacter->GameModeLab2->ChickensTargets) {
         if (Chicken && Chicken->StartingIntersectionPath) {
             TArray<AIntersectionPath*> Path = Dijkstra(StartPath, Chicken->StartingIntersectionPath);
             float PathCost = Path.Num();
@@ -120,7 +122,7 @@ void UPathFindingManager::MoveToPosition(FVector TargetPosition) {
 
 void UPathFindingManager::CalculatePath() {
     OwnerCharacter->CheckOverlappingPaths();
-    if (OwnerCharacter->StartingIntersectionPath != OwnerCharacter->FarmIntersection) {
+    if (OwnerCharacter->bHasChicken && OwnerCharacter->StartingIntersectionPath != OwnerCharacter->FarmIntersection) {
         TArray<AIntersectionPath*> NewPath = Dijkstra(OwnerCharacter->StartingIntersectionPath, OwnerCharacter->FarmIntersection);
         MoveToIntersection(NewPath);
     } else {

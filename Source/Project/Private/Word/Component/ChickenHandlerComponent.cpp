@@ -3,6 +3,7 @@
 
 #include "Word/Component/ChickenHandlerComponent.h"
 
+#include "GameModeLab2.h"
 #include "Components/BoxComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Word/Component/PathFindingManager.h"
@@ -23,7 +24,7 @@ void UChickenHandlerComponent::PickupChicken(ANPCCharacter* Chicken) {
 
 	Chicken->AttachToComponent(OwnerCharacter->GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("ChickenSocket"));
 	OwnerCharacter->bHasChicken = true;
-	OwnerCharacter->PathFindingManager->ChickensTargets.Remove(Chicken);
+	OwnerCharacter->GameModeLab2->ChickensTargets.Remove(Chicken);
 }
 
 

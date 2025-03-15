@@ -50,6 +50,7 @@ void AGameModeLab2::SpawnManagerSetup() {
 	if (SpawnManager) {
 		SpawnManager->SpawnChickensCharacter();
 		SpawnManager->SpawnFarmerCharacter();
+		ChickensTargets = SpawnManager->SpawnedChickens;
 	}
 }
 
@@ -62,7 +63,6 @@ void AGameModeLab2::InitNcpCharacter() {
 		Farmer->FarmIntersection = FarmIntersection;
 		if (Farmer->PathFindingManager) {
 			Farmer->PathFindingManager->AllIntersections = AllIntersections;
-			Farmer->PathFindingManager->ChickensTargets = SpawnManager->SpawnedChickens;
 			Farmer->PathFindingManager->Farmers = SpawnManager->SpawnedFarmers;
 		}
 	}

@@ -8,6 +8,10 @@
 #include "Word/Path/SimplePath.h"
 #include "NPCCharacter.generated.h"
 
+class AGameModeLab2;
+class UPlannerComponent;
+class USteeringComponent;
+class USeek;
 class UArrival;
 class UChickenHandlerComponent;
 class UPathFindingManager;
@@ -28,15 +32,17 @@ public:
 	UPROPERTY()
 	UArrival* ArrivalComp;
 	UPROPERTY()
-	ANPC_AIController* AIController;
-	UPROPERTY()
 	USteeringComponent* SteeringComp;
 	UPROPERTY()
 	UPathFindingManager* PathFindingManager;
 	UPROPERTY()
+	ANPC_AIController* AIController;
+	UPROPERTY()
 	UChickenHandlerComponent* ChickenHandler;
 	UPROPERTY()
 	AActor* ParkingSpot;
+	UPROPERTY()
+	AGameModeLab2* GameModeLab2;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Pathfinding")
 	AIntersectionPath* FarmIntersection;
