@@ -55,7 +55,7 @@ void ANPC_AIController::CheckDistanceToTarget() {
 		}
 	}
 	
-	if (Distance < 400.0f) {
+	if (Distance < 300.0f) {
 		if (OwnerCharacter->bIsLastIntersection) {
 			if (OwnerCharacter->bHasChicken) {
 				OwnerCharacter->ChickenHandler->DropChicken(OwnerCharacter->PathFindingManager->ChickenTarget);
