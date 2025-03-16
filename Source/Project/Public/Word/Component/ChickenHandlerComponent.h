@@ -22,6 +22,7 @@ public:
 
 	void PickupChicken(ANPCCharacter* Chicken);
 	void DropChicken(ANPCCharacter* CarriedChicken);
+	bool IsOtherFarmersCloseToTarget(ANPCCharacter* CarriedChicken);
 
 protected:
 	virtual void BeginPlay() override;

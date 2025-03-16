@@ -30,7 +30,7 @@ public:
 
 	void MoveToIntersection(TArray<AIntersectionPath*> Path);
 	void CalculatePath();
-	void MoveToPosition(FVector TargetPosition);
+	void MoveToPosition(FVector TargetPosition, bool bLastIntersection);
 	TArray<AIntersectionPath*> FindPathToClosestChicken();
 	
 };

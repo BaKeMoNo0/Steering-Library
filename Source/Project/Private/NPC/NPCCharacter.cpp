@@ -39,7 +39,6 @@ void ANPCCharacter::BeginPlay() {
 	SteeringComp = FindComponentByClass<USteeringComponent>();
 	ChickenHandler = FindComponentByClass<UChickenHandlerComponent>();
 	ArrivalComp = FindComponentByClass<UArrival>();
-	//PlannerComp = FindComponentByClass<UPlannerComponent>();
 	GameModeLab2 = Cast<AGameModeLab2>(GetWorld()->GetAuthGameMode());
 }
 
@@ -88,11 +87,49 @@ void ANPCCharacter::MoveToNextPoint() {
 
 void ANPCCharacter::OnReachDestination() {
 	CurrentPathIndex++;
-	
+
 	if (CurrentPathIndex < CurrentPath.Num()) {
 		MoveToNextPoint();
-	} 
-	else if (CurrentPathIndex == CurrentPath.Num() && PathFindingManager->ChickenTarget) {
-		PathFindingManager->MoveToPosition(PathFindingManager->ChickenTarget->GetActorLocation());
+	}  
+	else if (PathFindingManager->ChickenTarget) {
+		PathFindingManager->MoveToPosition(PathFindingManager->ChickenTarget->GetActorLocation(), true);
+	}
+	else if (bGoingToFarm) {  
+		bGoingToFarm = false;
+		bGoingToParkingEntrance = true;
+		PathFindingManager->MoveToPosition(EnteredParkingSpot->GetActorLocation(), false);
+	}
+	else if (bGoingToParkingEntrance) {
+		bGoingToParkingEntrance = false;
+		bGoParking = true;
+		PathFindingManager->MoveToPosition(ParkingSpot->GetActorLocation(), false);
+	}
+	else {
+		PathFindingManager->CalculatePath();
 	}
 }
+
+
+
+
+void ANPCCharacter::AvoidOtherNPC() {
+	FVector RightOffset = FVector::ZeroVector;
+    for (ANPCCharacter* OtherRescuer : PathFindingManager->Farmers) {
+        if (OtherRescuer != this) {
+            float Distance = FVector::Dist(GetActorLocation(), OtherRescuer->GetActorLocation());
+
+            if (Distance < 500.f) {
+                UE_LOG(LogTemp, Warning, TEXT("NPC trop proche, décalage vers la droite"));
+
+                FVector ForwardDirection = GetVelocity().GetSafeNormal();
+                FVector RightDirection = FVector::CrossProduct(ForwardDirection, FVector::UpVector).GetSafeNormal();
+                RightOffset += RightDirection * 300.0f;
+            }
+        }
+    }
+
+    if (!RightOffset.IsNearlyZero()) {
+        AddMovementInput(RightOffset);
+    }
+}
+

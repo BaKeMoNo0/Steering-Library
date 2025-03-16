@@ -112,27 +112,38 @@ void UPathFindingManager::MoveToIntersection(TArray<AIntersectionPath*> Path) {
 }
 
 
-void UPathFindingManager::MoveToPosition(FVector TargetPosition) {
+void UPathFindingManager::MoveToPosition(FVector TargetPosition, bool bLastIntersection) {
     if (OwnerCharacter->AIController) {
-        OwnerCharacter->bIsLastIntersection = true;
+        OwnerCharacter->bIsLastIntersection = bLastIntersection;
         OwnerCharacter->AIController->MoveToTarget(TargetPosition);
     }
 }
 
 
 void UPathFindingManager::CalculatePath() {
+    if (!OwnerCharacter) return;
+
     OwnerCharacter->CheckOverlappingPaths();
-    if (OwnerCharacter->bHasChicken && OwnerCharacter->StartingIntersectionPath != OwnerCharacter->FarmIntersection) {
-        TArray<AIntersectionPath*> NewPath = Dijkstra(OwnerCharacter->StartingIntersectionPath, OwnerCharacter->FarmIntersection);
-        MoveToIntersection(NewPath);
-    } else {
-        TArray<AIntersectionPath*> Path = OwnerCharacter->PathFindingManager->FindPathToClosestChicken();
-        if (Path.Num() > 0) {
-            OwnerCharacter->PathFindingManager->MoveToIntersection(Path);
+
+    if (!OwnerCharacter->bHasChicken){
+        TArray<AIntersectionPath*> PathToChicken = FindPathToClosestChicken();
+        if (PathToChicken.Num() > 0) {
+            MoveToIntersection(PathToChicken);
         } else {
-            OwnerCharacter->bGoParking = true;
-            MoveToPosition(OwnerCharacter->ParkingSpot->GetActorLocation());
+            OwnerCharacter->bGoingToFarm = true;
+            if (OwnerCharacter->StartingIntersectionPath != OwnerCharacter->FarmIntersection) {
+               TArray<AIntersectionPath*> PathToFarm = Dijkstra(OwnerCharacter->StartingIntersectionPath, OwnerCharacter->FarmIntersection);
+                if (PathToFarm.Num() > 0) {
+                    MoveToIntersection(PathToFarm);
+                }
+            }
+        }
+    } else {
+        TArray<AIntersectionPath*> PathToFarm = Dijkstra(OwnerCharacter->StartingIntersectionPath, OwnerCharacter->FarmIntersection);
+        if (PathToFarm.Num() > 0) {
+            MoveToIntersection(PathToFarm);
         }
     }
 }
+
 

@@ -36,7 +36,7 @@ protected:
 	TSubclassOf<AActor> SpawnPointClass;
 
 	UPROPERTY(EditAnywhere, Category="Spawn")
-	int32 NumberOfChickenToSpawn = 3;
+	int32 NumberOfChickenToSpawn = 5;
 
 	UPROPERTY(EditAnywhere, Category="Spawn")
 	int32 NumberOfFarmerToSpawn = 2;

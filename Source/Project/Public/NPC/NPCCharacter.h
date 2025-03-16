@@ -42,6 +42,8 @@ public:
 	UPROPERTY()
 	AActor* ParkingSpot;
 	UPROPERTY()
+	AActor* EnteredParkingSpot;
+	UPROPERTY()
 	AGameModeLab2* GameModeLab2;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Pathfinding")
@@ -56,11 +58,14 @@ public:
 	bool bIsLastIntersection = false;
 	bool bHasChicken = false;
 	bool bGoParking = false;
+	bool bGoingToFarm = false;
+	bool bGoingToParkingEntrance = false;
 	
 	void CheckOverlappingPaths();
 	void FollowPath(const TArray<AIntersectionPath*>& Path);
 	void MoveToNextPoint();
 	void OnReachDestination();
+	void AvoidOtherNPC();
 protected:
 	virtual void BeginPlay() override;
 };

@@ -38,31 +38,33 @@ void ANPC_AIController::MoveToTarget(FVector TargetLocation) {
 
 
 void ANPC_AIController::CheckDistanceToTarget() {
-	if (OwnerCharacter && !CurrentTargetLocation.IsNearlyZero()) {
-		for (ANPCCharacter* OtherRescuer : OwnerCharacter->PathFindingManager->Farmers) {
-			if (OtherRescuer != OwnerCharacter && FVector::Dist(OwnerCharacter->GetActorLocation(), OtherRescuer->GetActorLocation()) < 50.f) {
-				FVector AvoidanceVector = OwnerCharacter->GetActorLocation() - OtherRescuer->GetActorLocation();
-				AvoidanceVector.Normalize();
-				OwnerCharacter->AddMovementInput(AvoidanceVector * 100.0f);
-			}
+	if (!OwnerCharacter || CurrentTargetLocation.IsNearlyZero()) return;
+
+	float Distance = FVector::Dist(OwnerCharacter->GetActorLocation(), CurrentTargetLocation);
+	
+	if (OwnerCharacter->bGoParking || Distance < 100.f) {
+		GetWorldTimerManager().ClearTimer(DistanceCheckTimer);
+		return;
+	}
+	
+	if (OwnerCharacter->PathFindingManager->ChickenTarget && !OwnerCharacter->bHasChicken) {
+		if (OwnerCharacter->ChickenHandler->IsOtherFarmersCloseToTarget(OwnerCharacter->PathFindingManager->ChickenTarget)) {
+			OwnerCharacter->PathFindingManager->ChickenTarget = nullptr;
+			UE_LOG(LogTemp, Warning, TEXT("othertarget"));
+			OwnerCharacter->PathFindingManager->CalculatePath();
 		}
-		
-		float Distance = FVector::Dist(OwnerCharacter->GetActorLocation(), CurrentTargetLocation);
-		if (OwnerCharacter->bGoParking || Distance < 100.f) {
-			GetWorldTimerManager().ClearTimer(DistanceCheckTimer);
-		}
-		if (Distance < 400.0f) {
-			if (OwnerCharacter->bIsLastIntersection && OwnerCharacter->bHasChicken) {
+	}
+	
+	if (Distance < 400.0f) {
+		if (OwnerCharacter->bIsLastIntersection) {
+			if (OwnerCharacter->bHasChicken) {
 				OwnerCharacter->ChickenHandler->DropChicken(OwnerCharacter->PathFindingManager->ChickenTarget);
-				OwnerCharacter->PathFindingManager->CalculatePath();
-			}
-			else if (OwnerCharacter->bIsLastIntersection && !OwnerCharacter->bHasChicken && OwnerCharacter->PathFindingManager->ChickenTarget) {
+			} else {
 				OwnerCharacter->ChickenHandler->PickupChicken(OwnerCharacter->PathFindingManager->ChickenTarget);
-				OwnerCharacter->PathFindingManager->CalculatePath();
 			}
-			else {
-				OwnerCharacter->OnReachDestination();
-			}
+			OwnerCharacter->PathFindingManager->CalculatePath();
+		} else {
+			OwnerCharacter->OnReachDestination();
 		}
 	}
 }

@@ -14,22 +14,15 @@
   <component name="ChangeListManager">
     <list default="true" id="17109111-de2b-402c-a23b-2e9c5efacfb7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Game/Character/Blueprints/Lab2/BP_PlayerCharacterLab2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Game/Character/Blueprints/Lab2/BP_PlayerCharacterLab2.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Game/Character/Blueprints/Lab2/NPC/BP_NPCFarmer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Game/Character/Blueprints/Lab2/NPC/BP_NPCFarmer.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Game/Level/Lab2.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Game/Level/Lab2.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Game/Word/Mesh/MiniPickUp/Mini_Pickup_Truck_01.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Game/Word/Mesh/MiniPickUp/Mini_Pickup_Truck_Wheel_01_FL.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Game/Word/Mesh/MiniPickUp/Mini_Pickup_Truck_Wheel_01_FR.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Game/Word/Mesh/MiniPickUp/Mini_Pickup_Truck_Wheel_01_RL.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Game/Word/Mesh/MiniPickUp/Mini_Pickup_Truck_Wheel_01_RR.uasset" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Project/Private/GameModeLab2.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Private/GameModeLab2.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Project/Private/NPC/NPCCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Private/NPC/NPCCharacter.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Project/Private/NPC/NPC_AIController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Private/NPC/NPC_AIController.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Project/Private/Word/Component/ChickenHandlerComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Private/Word/Component/ChickenHandlerComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Project/Private/Word/Component/PathFindingManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Private/Word/Component/PathFindingManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Project/Private/Word/Path/IntersectionPath.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Private/Word/Path/IntersectionPath.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Project/Public/GameModeLab2.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Public/GameModeLab2.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Project/Public/NPC/NPCCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Public/NPC/NPCCharacter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Project/Public/Word/Component/ChickenHandlerComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Public/Word/Component/ChickenHandlerComponent.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Project/Public/Word/Component/PathFindingManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Public/Word/Component/PathFindingManager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Project/Public/Word/Spawn/SpawnManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Project/Public/Word/Spawn/SpawnManager.h" afterDir="false" />
     </list>
@@ -274,6 +267,9 @@
       <workItem from="1741982398680" duration="5978000" />
       <workItem from="1742043830475" duration="1015000" />
       <workItem from="1742048353568" duration="3014000" />
+      <workItem from="1742056494107" duration="3475000" />
+      <workItem from="1742072668291" duration="5161000" />
+      <workItem from="1742119926331" duration="21748000" />
     </task>
     <servers />
   </component>

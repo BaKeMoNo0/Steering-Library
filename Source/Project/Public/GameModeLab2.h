@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
 #include "NPC/NPCCharacter.h"
+#include "PlayerCharacter/PlayerCharacterLab2.h"
 #include "GameModeLab2.generated.h"
 
 
@@ -35,6 +36,8 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
+	UPROPERTY()
+	APlayerCharacterLab2* PlayerCharacter;
 	UPROPERTY()
 	TArray<AIntersectionPath*> AllIntersections;
 	UPROPERTY()

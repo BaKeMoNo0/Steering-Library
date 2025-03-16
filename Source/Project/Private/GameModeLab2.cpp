@@ -10,9 +10,11 @@
 
 void AGameModeLab2::BeginPlay() {
 	Super::BeginPlay();
+	
 	InitAllIntersectionPath();
 	InitSimplePath();
 	SpawnManagerSetup();
+	PlayerCharacter = Cast<APlayerCharacterLab2>(UGameplayStatics::GetActorOfClass(GetWorld(),APlayerCharacterLab2::StaticClass()));
 	InitNcpCharacter();
 	InitParkingSpots();
 	StartPathFinding();
@@ -70,12 +72,31 @@ void AGameModeLab2::InitNcpCharacter() {
 
 void AGameModeLab2::InitParkingSpots() {
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ParkingSpotPointClass, ParkingSpotsPoints);
+	
+	AActor* ParkingEntrance = nullptr;
+	TArray<AActor*> AvailableParkingSpots;
+	
+	for (AActor* Spot : ParkingSpotsPoints) {
+		if (Spot->ActorHasTag("ParkingEntrance")) {
+			ParkingEntrance = Spot;
+		} else {
+			AvailableParkingSpots.Add(Spot);
+		}
+	}
+
+	if (!ParkingEntrance) return;
+
+	
 	int32 SpotIndex = 0;
 	for (ANPCCharacter* Farmer : SpawnManager->SpawnedFarmers) {
-		if (!Farmer || SpotIndex >= ParkingSpotsPoints.Num()) break;
+		if (!Farmer) continue;
+		Farmer->EnteredParkingSpot = ParkingEntrance;
 
-		Farmer->ParkingSpot = ParkingSpotsPoints[SpotIndex];
-		SpotIndex++;
+
+		if (SpotIndex < AvailableParkingSpots.Num()) {
+			Farmer->ParkingSpot = AvailableParkingSpots[SpotIndex];
+			SpotIndex++;
+		}
 	}
 }
 

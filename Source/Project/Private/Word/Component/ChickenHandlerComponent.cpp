@@ -50,3 +50,25 @@ void UChickenHandlerComponent::DropChicken(ANPCCharacter* CarriedChicken) {
 	OwnerCharacter->bHasChicken = false;
 	OwnerCharacter->PathFindingManager->ChickenTarget = nullptr;
 }
+
+
+bool UChickenHandlerComponent::IsOtherFarmersCloseToTarget(ANPCCharacter* TargetChicken) {
+	if (!TargetChicken) return false;
+	
+	/*float Distance = FVector::Dist(OwnerCharacter->GameModeLab2->PlayerCharacter->GetActorLocation(), TargetChicken->GetActorLocation());
+	if (Distance < 600.0f) {
+		return true;
+	}*/
+	for (ANPCCharacter* OtherFarmer : OwnerCharacter->PathFindingManager->Farmers) {
+		if (OtherFarmer != OwnerCharacter && OtherFarmer->PathFindingManager->ChickenTarget == TargetChicken) {
+			float Dist = FVector::Dist(OtherFarmer->GetActorLocation(), TargetChicken->GetActorLocation());
+
+			if (Dist < 600.f) {
+				return true;
+			}
+		}
+	}
+	
+	return false;
+}
+
