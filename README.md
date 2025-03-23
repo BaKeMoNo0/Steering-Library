@@ -25,7 +25,7 @@ The library include the following behaviors:
   - ✅ One way: The agent follows a path to a specific endpoint and stops.
   - ✅ Two ways: The agent moves to an endpoint, then reverses direction back to the start, repeating the process indefinitely.
 
-# Usage
+## Usage
   Launch the project in Unreal Engine.
   Select the Lab1 level
   Control the character using:  
@@ -42,7 +42,7 @@ The library include the following behaviors:
    - **'è' or '7'** for **OneWay** behavior.
    - **'_' or '8'** for **TwoWay** behavior.
 
-# Second part of the project
+# Second Part of the Project
 
 ## Pathfinding
 The objective of this lab project is to program both a simple planning and a path finding algorithms and make them work together.
@@ -62,7 +62,7 @@ They can also see what each other is doing, but they cannot communicate to coord
 the game include :
   - ✅ Pathfinding : Dijkstra algorithm.
 
-# Usage
+## Usage
   Launch the project in Unreal Engine.
   Select the Lab2 level
   Control the character using:  
